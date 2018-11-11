@@ -20,11 +20,12 @@ int main(int argc, char **argv)
     glutReshapeFunc(on_reshape);
     glutDisplayFunc(on_display);
     
-    /*  glClearColor( 0.35,  0.35 , 0.67,0);*/
-    glClearColor(0.2,0.2,0.5,0);
+    /*  glClearColor( 0.35,  0.35 , 0.67,0);
+      glClearColor(0.2,0.2,0.5,0);*/
+   glClearColor(0,0,0,0);
     
     glEnable(GL_DEPTH_TEST);
-    /*glLineWidth(2);*/
+    glLineWidth(5);
     
     glutMainLoop();
 
@@ -73,21 +74,21 @@ static void on_display(void)
         glColor3f(1,0,0);
         glVertex3f(0,0,0);
         glVertex3f(10,0,0);
-        glColor3f(0.5,0,0);
+        glColor3f(0.4,0,0);
         glVertex3f(0,0,0);
         glVertex3f(-10,0,0);
         
         glColor3f(0,1,0);
         glVertex3f(0,0,0);
         glVertex3f(0,10,0);
-         glColor3f(0,0.5,0);
+         glColor3f(0,0.4,0);
         glVertex3f(0,0,0);
         glVertex3f(0,-10,0);
         
         glColor3f(0,0,1);
         glVertex3f(0,0,0);
         glVertex3f(0,0,10);
-        glColor3f(0,0,0.5);
+        glColor3f(0,0,0.4);
         glVertex3f(0,0,0);
         glVertex3f(0,0,-40);
     glEnd();
