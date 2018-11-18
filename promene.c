@@ -49,7 +49,48 @@ static void on_reshape(int width, int height)
 
 static void on_display(void)
 {
+    /*
+    GLfloat light_ambient[] = { 0, 0, 0, 1 };
+
     
+    GLfloat light_diffuse[] = { 1, 1, 1, 1 };
+
+    
+    GLfloat light_specular[] = { 1, 1, 1, 1 };
+
+    
+    GLfloat model_ambient[] = { 0.4, 0.4, 0.4, 1 };
+    
+    
+    GLfloat light_position[] = { 1, 1, 1, 0 };
+
+    
+    GLfloat no_material[] = { 0, 0, 0, 1 };
+
+    
+    GLfloat material_ambient[] = { 0.7, 0.7, 0.7, 1 };
+
+    
+    GLfloat material_ambient_heterogeneous[] = { 0.8, 0.8, 0.2, 1 };
+
+    
+    GLfloat material_diffuse[] = { 0.1, 0.5, 0.8, 1 };
+
+   
+    GLfloat material_specular[] = { 1, 1, 1, 1 };
+
+    
+    GLfloat no_shininess[] = { 0 };
+
+    
+    GLfloat low_shininess[] = { 5 };
+
+    
+    GLfloat high_shininess[] = { 100 };
+
+    
+    GLfloat material_emission[] = { 0.3, 0.2, 0.2, 0 };
+    */
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     glViewport(0, 0, window_width, window_height);
@@ -60,15 +101,57 @@ static void on_display(void)
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(4, 4, 4, 0, 0, 0, 0, 0, 1);
-
+    gluLookAt(6, 4, 2, 0, 0, -3, 0, 0, 1);
+    /*
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    
+    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, model_ambient);
+        */
+    
     glColor3f(200,200,0);
-    glutSolidSphere(0.5, 100, 100);
+    
+    glPushMatrix();
+    /*glMaterialfv(GL_FRONT, GL_AMBIENT, material_ambient_heterogeneous);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, material_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, no_material);
+    glMaterialfv(GL_FRONT, GL_SHININESS, no_shininess);
+    glMaterialfv(GL_FRONT, GL_EMISSION, material_emission);*/
+    glutSolidSphere(0.2, 100, 100);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3f(200,200,0);
+    glTranslatef(0,0,-2.2);
+    glutSolidSphere(0.2, 100, 100);
+    glPopMatrix();
     
     glPushMatrix();
     glColor3f(0.85, 0.85, 1);
     glutWireCube(1);
     glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(0, 0, -3);
+    glColor3f(0.8, 0.8, 0.8);
+    glutSolidCube(1);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(0, 0, -5);
+    glColor3f(0.4, 0.4, 0.4);
+    glutSolidCube(3);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(0, 0, -8);
+    glColor3f(0.5, 0.1, 0.1);
+    glutSolidCube(5);
+    glPopMatrix();
+    
        
     glBegin(GL_LINES);
         glColor3f(1,0,0);
@@ -81,7 +164,7 @@ static void on_display(void)
         glColor3f(0,1,0);
         glVertex3f(0,0,0);
         glVertex3f(0,10,0);
-         glColor3f(0,0.4,0);
+        glColor3f(0,0.4,0);
         glVertex3f(0,0,0);
         glVertex3f(0,-10,0);
         
