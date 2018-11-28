@@ -120,17 +120,17 @@ static void on_display(void)
     glMaterialfv(GL_FRONT, GL_SPECULAR, no_material);
     glMaterialfv(GL_FRONT, GL_SHININESS, no_shininess);
     glMaterialfv(GL_FRONT, GL_EMISSION, material_emission);*/
-    glutSolidSphere(0.2, 100, 100);
+    glutSolidSphere(0.2, 1000, 1000);
     glPopMatrix();
     
     glPushMatrix();
     glColor3f(200,200,0);
     glTranslatef(0,0,-2.2);
-    glutSolidSphere(0.2, 100, 100);
+    glutSolidSphere(0.2, 1000, 1000);
     glPopMatrix();
     
     glPushMatrix();
-    glColor3f(0.85, 0.85, 1);
+    glColor3f(0.85, 0.85, 0.1);
     glutWireCube(1);
     glPopMatrix();
     
