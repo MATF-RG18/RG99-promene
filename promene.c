@@ -97,8 +97,11 @@ static void on_keyboard(unsigned char key, int x, int y)
     case 'r':
     case 'R':
         /* Resetuju se uglovi phi i theta na pocetne vrednosti. */
-        kamera.phi = kamera.theta = 0;
-        glutPostRedisplay();
+        brojac = 0;
+        if (!timer_active) {
+            timer_active = 1;
+            glutTimerFunc(50, on_timer, 0);
+        }
         break;
     case 'S':
     case 's':
@@ -247,7 +250,7 @@ static void init()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();   
     convert_decart();
-    gluLookAt(10, 4, 3, 0, 0, 0, 0, 0, 1);
+    gluLookAt(5, 2, 3, 0, 0, 0, 0, 0, 1);
 }
 
 static void init_lights()
@@ -329,21 +332,66 @@ static void my_obj()
     } else {
         glTranslatef(0, 0, 2.2);
     }
-    glutSolidSphere(0.2, 100, 100);
+    glutSolidSphere(0.05, 100, 100);
     glPopMatrix();
     
     glPushMatrix();
     if (brojac > 1000) {
+        
+        float tacka[3];
+        
         if (brojac < 2000) {
             float koef = (brojac - 1000) / 1000.0f;
             printf("koef: %f\n", koef);
+            tacka[0] = 2 * koef;            
+            tacka[1] = 0;
+            tacka[2] = 2.2 * koef;
+
             glTranslatef(2 * koef, 0, 2.2 * koef);
         } else {
+            tacka[0] = 2;            
+            tacka[1] = 0;
+            tacka[2] = 2.2;
             glTranslatef(2, 0, 2.2);
         }
-        glutSolidSphere(0.2, 100, 100);
+        
+        glutSolidSphere(0.05, 100, 100);
+        glLineWidth(0.08);
+        glBegin(GL_LINES);
+            glVertex3f(0, 0, 0);
+            glVertex3f(-tacka[0], -tacka[1], -tacka[2]);
+            
+        glEnd();
     }
     glPopMatrix();
+    
+    if (brojac > 2000) {
+        glPushMatrix();
+        glTranslatef(0, 0, 2.2);
+        float koef = brojac < 3000 ? (brojac - 2000) / 1000.0f : 1.10;
+        glBegin(GL_TRIANGLE_FAN);
+            glVertex3f(0, 0, -2.2);
+            for (float i = 0.0; i < koef; i += 0.02) {
+                float x = 2 * cosf(i * 2 * M_PI);
+                float y = 2 * sinf(i * 2 * M_PI);
+                glVertex3f(x, y, 0);
+                glNormal3f(x,y,0);
+            }
+        glEnd();
+        if (brojac > 3000) {
+            glBegin(GL_TRIANGLE_FAN);
+                glVertex3f(0, 0, 0);
+                for (float i = 0.0; i <= 1.05; i += 0.02) {
+                    float x = 2 * cosf(i * 2 * M_PI);
+                    float y = 2 * sinf(i * 2 * M_PI);
+                    glVertex3f(x, y, 0);
+                    glNormal3f(1, 1, 0);
+                }
+            glEnd();
+        }
+        glPopMatrix(); 
+    }
+
     
     glPushMatrix();
     glColor3f(0.85, 0.85, 0.1);
