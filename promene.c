@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <GL/glut.h>
 #include <math.h>
@@ -45,6 +46,9 @@ static void zoom_in();
 static void zoom_out();
 static void camera_init();
 
+static void on_timer(int value);
+int brojac = 0;
+int timer_active = 0;
 
 int main(int argc, char **argv)
 {
@@ -64,6 +68,7 @@ int main(int argc, char **argv)
     glClearColor(0,0,0,0);
     glEnable(GL_COLOR_MATERIAL);
     camera_init();
+    
     
     glEnable(GL_DEPTH_TEST);
     glLineWidth(5);
@@ -115,8 +120,22 @@ static void on_keyboard(unsigned char key, int x, int y)
         zoom_out();
         glutPostRedisplay();
         break;
-        
+    case 'g':
+    case 'G':
+        /* Pokrece se simulacija. */
+        if (!timer_active) {
+            glutTimerFunc(50, on_timer, 0);
+            timer_active = 1;
+        }
+        break;
+
+    case 't':
+    case 'T': 
+        /* Zaustavlja se simulacija. */
+        timer_active = 0;
+        break;
     }
+        
 }
 
 static void camera_init()
@@ -130,6 +149,28 @@ static void convert_decart()
     kamera.x = kamera.rad * cos(kamera.theta) * cos(kamera.phi);
     kamera.y = kamera.rad * cos(kamera.theta) * sin(kamera.phi);
     kamera.z = kamera.rad * sin(kamera.theta);
+}
+
+static void on_timer(int value)
+{
+    /* Proverava se da li callback dolazi od odgovarajuceg tajmera. */
+    if (value != 0)
+        return;
+
+    /* Azurira se vreme simulacije. */
+    brojac += 50;
+
+    /* Forsira se ponovno iscrtavanje prozora. */
+    glutPostRedisplay();
+
+    /* Po potrebi se ponovo postavlja tajmer. */
+    
+    if (brojac % 1000 == 0) {
+        timer_active = 0;
+    }
+    
+    if (timer_active)
+        glutTimerFunc(50, on_timer, 0);
 }
 
 static void look_left()
@@ -206,7 +247,7 @@ static void init()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();   
     convert_decart();
-    gluLookAt(kamera.x, kamera.y, kamera.z, 0, 0, 0, 0, 0, 1);
+    gluLookAt(10, 4, 3, 0, 0, 0, 0, 0, 1);
 }
 
 static void init_lights()
@@ -278,16 +319,30 @@ static void coord_sys()
 }
 
 static void my_obj()
-{
-    glPushMatrix();
-    glColor3f(1.0,0.87541,0.0);
-    glutSolidSphere(0.2, 1000, 1000);
-    glPopMatrix();
-    
+{    
     glPushMatrix();
     glColor3f(1.0,0.87541,0.0);
     glTranslatef(0,0,-2.2);
-    glutSolidSphere(0.2, 1000, 1000);
+    if (brojac < 1000) {
+        float koef = brojac / 1000.0f;
+        glTranslatef(0, 0, 2.2 * koef);
+    } else {
+        glTranslatef(0, 0, 2.2);
+    }
+    glutSolidSphere(0.2, 100, 100);
+    glPopMatrix();
+    
+    glPushMatrix();
+    if (brojac > 1000) {
+        if (brojac < 2000) {
+            float koef = (brojac - 1000) / 1000.0f;
+            printf("koef: %f\n", koef);
+            glTranslatef(2 * koef, 0, 2.2 * koef);
+        } else {
+            glTranslatef(2, 0, 2.2);
+        }
+        glutSolidSphere(0.2, 100, 100);
+    }
     glPopMatrix();
     
     glPushMatrix();
