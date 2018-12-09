@@ -68,7 +68,7 @@ int main(int argc, char **argv)
     glClearColor(0,0,0,0);
     glEnable(GL_COLOR_MATERIAL);
     camera_init();
-    
+    glLineWidth(20.0);
     
     glEnable(GL_DEPTH_TEST);
     glLineWidth(5);
@@ -326,23 +326,21 @@ static void my_obj()
     glPushMatrix();
     glColor3f(1.0,0.87541,0.0);
     glTranslatef(0,0,-2.2);
-    if (brojac < 1000) {
-        float koef = brojac / 1000.0f;
+    if (brojac <= 2000) {
+        float koef = brojac < 1000 ? brojac / 1000.0f : 1.0f;
         glTranslatef(0, 0, 2.2 * koef);
-    } else {
-        glTranslatef(0, 0, 2.2);
+        glutSolidSphere(0.05, 100, 100);
+
     }
-    glutSolidSphere(0.05, 100, 100);
     glPopMatrix();
     
     glPushMatrix();
-    if (brojac > 1000) {
+    if (brojac > 1000 && brojac <= 2000) {
         
         float tacka[3];
         
         if (brojac < 2000) {
             float koef = (brojac - 1000) / 1000.0f;
-            printf("koef: %f\n", koef);
             tacka[0] = 2 * koef;            
             tacka[1] = 0;
             tacka[2] = 2.2 * koef;
@@ -356,7 +354,7 @@ static void my_obj()
         }
         
         glutSolidSphere(0.05, 100, 100);
-        glLineWidth(0.08);
+        
         glBegin(GL_LINES);
             glVertex3f(0, 0, 0);
             glVertex3f(-tacka[0], -tacka[1], -tacka[2]);
@@ -385,7 +383,7 @@ static void my_obj()
                     float x = 2 * cosf(i * 2 * M_PI);
                     float y = 2 * sinf(i * 2 * M_PI);
                     glVertex3f(x, y, 0);
-                    glNormal3f(1, 1, 0);
+                    glNormal3f(x, y, 0);
                 }
             glEnd();
         }
