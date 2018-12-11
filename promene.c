@@ -68,10 +68,11 @@ int main(int argc, char **argv)
     glClearColor(0,0,0,0);
     glEnable(GL_COLOR_MATERIAL);
     camera_init();
-    glLineWidth(20.0);
+    
     
     glEnable(GL_DEPTH_TEST);
-    glLineWidth(5);
+    glLineWidth(10);
+    glEnable(GL_LINE_SMOOTH);
     
     glutMainLoop();
 
@@ -250,7 +251,7 @@ static void init()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();   
     convert_decart();
-    gluLookAt(5, 2, 3, 0, 0, 0, 0, 0, 1);
+    gluLookAt(kamera.x, kamera.y, kamera.z, 0, 0, 0, 0, 0, 1);
 }
 
 static void init_lights()
@@ -355,6 +356,10 @@ static void my_obj()
         
         glutSolidSphere(0.05, 100, 100);
         
+        glLineWidth(6);
+        int lajnvidth=-1;
+        glGetIntegerv(GL_LINE_WIDTH, &lajnvidth);
+        printf("%d\n", lajnvidth);
         glBegin(GL_LINES);
             glVertex3f(0, 0, 0);
             glVertex3f(-tacka[0], -tacka[1], -tacka[2]);
@@ -366,24 +371,28 @@ static void my_obj()
     if (brojac > 2000) {
         glPushMatrix();
         glTranslatef(0, 0, 2.2);
-        float koef = brojac < 3000 ? (brojac - 2000) / 1000.0f : 1.10;
+        float koef = brojac < 3000 ? (brojac - 2000) / 1000.0f : 1.05;
         glBegin(GL_TRIANGLE_FAN);
+            glNormal3f(0, 0, -1);
             glVertex3f(0, 0, -2.2);
             for (float i = 0.0; i < koef; i += 0.02) {
                 float x = 2 * cosf(i * 2 * M_PI);
                 float y = 2 * sinf(i * 2 * M_PI);
-                glVertex3f(x, y, 0);
                 glNormal3f(x,y,0);
+                glVertex3f(x, y, 0);
+                
             }
         glEnd();
         if (brojac > 3000) {
             glBegin(GL_TRIANGLE_FAN);
+                glNormal3f(0, 0, 1);
                 glVertex3f(0, 0, 0);
-                for (float i = 0.0; i <= 1.05; i += 0.02) {
+                for (float i = 0.0; i <= (brojac-3000) /1000.0f; i += 0.02) {
                     float x = 2 * cosf(i * 2 * M_PI);
                     float y = 2 * sinf(i * 2 * M_PI);
+                    glNormal3f(0, 0, 1);
                     glVertex3f(x, y, 0);
-                    glNormal3f(x, y, 0);
+                    
                 }
             glEnd();
         }
@@ -422,7 +431,7 @@ static void on_display(void)
     init_lights();
     
     my_obj();
-    coord_sys();   
+    //coord_sys();   
    
     glutSwapBuffers();
 }
