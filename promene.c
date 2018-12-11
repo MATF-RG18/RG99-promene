@@ -5,9 +5,9 @@
 
 #define M_PI 3.141592653589793
 
-#define RADIUS 2
-#define PHI 1
-#define THETA 1
+#define RADIUS 9
+#define PHI 0.5
+#define THETA 0.3
 
 #define MAX_R 5
 #define MIN_R 1
@@ -49,6 +49,7 @@ static void camera_init();
 static void on_timer(int value);
 int brojac = 0;
 int timer_active = 0;
+int animation_clip_cone = -2;
 
 int main(int argc, char **argv)
 {
@@ -71,8 +72,8 @@ int main(int argc, char **argv)
     
     
     glEnable(GL_DEPTH_TEST);
-    glLineWidth(10);
-    glEnable(GL_LINE_SMOOTH);
+    
+    //glEnable(GL_LINE_SMOOTH);
     
     glutMainLoop();
 
@@ -155,27 +156,7 @@ static void convert_decart()
     kamera.z = kamera.rad * sin(kamera.theta);
 }
 
-static void on_timer(int value)
-{
-    /* Proverava se da li callback dolazi od odgovarajuceg tajmera. */
-    if (value != 0)
-        return;
 
-    /* Azurira se vreme simulacije. */
-    brojac += 50;
-
-    /* Forsira se ponovno iscrtavanje prozora. */
-    glutPostRedisplay();
-
-    /* Po potrebi se ponovo postavlja tajmer. */
-    
-    if (brojac % 1000 == 0) {
-        timer_active = 0;
-    }
-    
-    if (timer_active)
-        glutTimerFunc(50, on_timer, 0);
-}
 
 static void look_left()
 {
@@ -321,6 +302,73 @@ static void coord_sys()
         glVertex3f(0,0,-40);
     glEnd();
 }
+static void on_timer(int value)
+{
+    /* Proverava se da li callback dolazi od odgovarajuceg tajmera. */
+    if (value != 0)
+        return;
+
+    /* Azurira se vreme simulacije. */
+    brojac += 50;
+
+    /* Forsira se ponovno iscrtavanje prozora. */
+    glutPostRedisplay();
+
+    /* Po potrebi se ponovo postavlja tajmer. */
+    
+    if (brojac % 1000 == 0) {
+        timer_active = 0;
+    }
+    
+    if (animation_clip_cone != -2)
+        animation_clip_cone += 0.5;
+    
+    if (timer_active)
+        glutTimerFunc(50, on_timer, 0);
+}
+static void delete_cone()
+{
+    
+    double clipPlane[] = { 0, 0, -1, -animation_clip_cone};
+    glClipPlane(GL_CLIP_PLANE0, clipPlane);
+  
+    if (brojac > 2000) {
+        glPushMatrix();
+        glEnable(GL_CLIP_PLANE0);
+        glTranslatef(0, 0, 2.2);
+        float koef = brojac < 3000 ? (brojac - 2000) / 1000.0f : 1.05;
+        glBegin(GL_TRIANGLE_FAN);
+            glNormal3f(0, 0, -1);
+            glVertex3f(0, 0, -2.2);
+            for (float i = 0.0; i < koef; i += 0.02) {
+                float x = 2 * cosf(i * 2 * M_PI);
+                float y = 2 * sinf(i * 2 * M_PI);
+                glNormal3f(x,y,0);
+                glVertex3f(x, y, 0);
+                
+            }
+        glEnd();
+        glDisable(GL_CLIP_PLANE0);
+        if (brojac > 3000) {
+            glBegin(GL_TRIANGLE_FAN);
+                glNormal3f(0, 0, 1);
+                glVertex3f(0, 0, 0);
+                for (float i = 0.0; i <= (brojac-3000) /1000.0f; i += 0.02) {
+                    float x = 2 * cosf(i * 2 * M_PI);
+                    float y = 2 * sinf(i * 2 * M_PI);
+                    glNormal3f(0, 0, 1);
+                    glVertex3f(x, y, 0);
+                    
+                }
+            glEnd();
+        
+        }
+        
+        glPopMatrix(); 
+        
+    }
+    
+}
 
 static void my_obj()
 {    
@@ -356,10 +404,10 @@ static void my_obj()
         
         glutSolidSphere(0.05, 100, 100);
         
-        glLineWidth(6);
-        int lajnvidth=-1;
-        glGetIntegerv(GL_LINE_WIDTH, &lajnvidth);
-        printf("%d\n", lajnvidth);
+       // glLineWidth(1);
+        //int lajnvidth=-1;
+        //glGetIntegerv(GL_LINE_WIDTH, &lajnvidth);
+        //printf("%d\n", lajnvidth);
         glBegin(GL_LINES);
             glVertex3f(0, 0, 0);
             glVertex3f(-tacka[0], -tacka[1], -tacka[2]);
@@ -368,38 +416,12 @@ static void my_obj()
     }
     glPopMatrix();
     
-    if (brojac > 2000) {
-        glPushMatrix();
-        glTranslatef(0, 0, 2.2);
-        float koef = brojac < 3000 ? (brojac - 2000) / 1000.0f : 1.05;
-        glBegin(GL_TRIANGLE_FAN);
-            glNormal3f(0, 0, -1);
-            glVertex3f(0, 0, -2.2);
-            for (float i = 0.0; i < koef; i += 0.02) {
-                float x = 2 * cosf(i * 2 * M_PI);
-                float y = 2 * sinf(i * 2 * M_PI);
-                glNormal3f(x,y,0);
-                glVertex3f(x, y, 0);
-                
-            }
-        glEnd();
-        if (brojac > 3000) {
-            glBegin(GL_TRIANGLE_FAN);
-                glNormal3f(0, 0, 1);
-                glVertex3f(0, 0, 0);
-                for (float i = 0.0; i <= (brojac-3000) /1000.0f; i += 0.02) {
-                    float x = 2 * cosf(i * 2 * M_PI);
-                    float y = 2 * sinf(i * 2 * M_PI);
-                    glNormal3f(0, 0, 1);
-                    glVertex3f(x, y, 0);
-                    
-                }
-            glEnd();
-        }
-        glPopMatrix(); 
-    }
+  
+    if (brojac > 4000)
+            animation_clip_cone = -1;
+    delete_cone();
 
-    
+    //glLineWidth(1);
     glPushMatrix();
     glColor3f(0.85, 0.85, 0.1);
     glutWireCube(1);
@@ -425,13 +447,14 @@ static void my_obj()
     
 }
 
+
 static void on_display(void)
 {
     init();
     init_lights();
     
     my_obj();
-    //coord_sys();   
+    coord_sys();   
    
     glutSwapBuffers();
 }
