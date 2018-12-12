@@ -49,7 +49,7 @@ static void camera_init();
 static void on_timer(int value);
 int brojac = 0;
 int timer_active = 0;
-int animation_clip_cone = -2;
+float animation_clip_cone = 0;
 
 int main(int argc, char **argv)
 {
@@ -320,8 +320,11 @@ static void on_timer(int value)
         timer_active = 0;
     }
     
-    if (animation_clip_cone != -2)
-        animation_clip_cone += 0.5;
+    printf("I'm alive");
+    if (animation_clip_cone != 0){
+        animation_clip_cone += 0.05;
+        printf("%f\n", animation_clip_cone);
+    }
     
     if (timer_active)
         glutTimerFunc(50, on_timer, 0);
@@ -329,7 +332,8 @@ static void on_timer(int value)
 static void delete_cone()
 {
     
-    double clipPlane[] = { 0, 0, -1, -animation_clip_cone};
+    double clipPlane[] = { 0, 0, 1, -animation_clip_cone};
+    printf("%f\n", animation_clip_cone);
     glClipPlane(GL_CLIP_PLANE0, clipPlane);
   
     if (brojac > 2000) {
@@ -417,8 +421,8 @@ static void my_obj()
     glPopMatrix();
     
   
-    if (brojac > 4000)
-            animation_clip_cone = -1;
+    if (brojac == 4000)
+            animation_clip_cone = 0.1;
     delete_cone();
 
     //glLineWidth(1);
