@@ -56,7 +56,7 @@ int main(int argc, char **argv)
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
     
-    glutInitWindowSize(300, 300);
+    glutInitWindowSize(1200, 800);
     glutInitWindowPosition(100, 100);
     glutCreateWindow("Promene");
     
@@ -422,7 +422,7 @@ static void my_obj()
     
   
     if (brojac == 4000)
-            animation_clip_cone = 0.1;
+            animation_clip_cone = 0.001;
     delete_cone();
 
     //glLineWidth(1);
