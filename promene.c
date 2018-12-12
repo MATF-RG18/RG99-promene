@@ -15,6 +15,7 @@
 #define MIN_PHI 0
 #define MAX_THETA M_PI/2
 #define MIN_THETA -M_PI/2
+#define MIN_THETA_CIRCLE 0.25
 
 #define DR 0.05
 #define DPHI M_PI/90
@@ -47,9 +48,15 @@ static void zoom_out();
 static void camera_init();
 
 static void on_timer(int value);
+static void delete_cone();
 int brojac = 0;
 int timer_active = 0;
 float animation_clip_cone = 0;
+int start_line = 0;
+int start_cone = 0; 
+int move_camera_circle = 0;
+static void draw_eyes();
+
 
 int main(int argc, char **argv)
 {
@@ -184,8 +191,12 @@ static void look_down()
          * ugao se odrzava u intervalu [-89,89] stepeni.
          */
     kamera.theta -= kamera.dtheta;
-    if (kamera.theta < MIN_THETA) {
+    if (kamera.theta < MIN_THETA && move_camera_circle!=1) {
         kamera.theta = MIN_THETA;
+    }
+    else if(kamera.theta < MIN_THETA_CIRCLE && move_camera_circle==1)
+    {
+        kamera.theta = MIN_THETA_CIRCLE;
     }
 }
 
@@ -310,20 +321,20 @@ static void on_timer(int value)
 
     /* Azurira se vreme simulacije. */
     brojac += 50;
+    move_camera_circle += 0.1;
 
     /* Forsira se ponovno iscrtavanje prozora. */
     glutPostRedisplay();
 
     /* Po potrebi se ponovo postavlja tajmer. */
     
-    if (brojac % 1000 == 0) {
+    if (brojac % 1000 == 0 && brojac<=4000) {
         timer_active = 0;
     }
     
-    printf("I'm alive");
+   
     if (animation_clip_cone != 0){
         animation_clip_cone += 0.05;
-        printf("%f\n", animation_clip_cone);
     }
     
     if (timer_active)
@@ -333,12 +344,16 @@ static void delete_cone()
 {
     
     double clipPlane[] = { 0, 0, 1, -animation_clip_cone};
-    printf("%f\n", animation_clip_cone);
+    //printf("%f\n", -animation_clip_cone);
     glClipPlane(GL_CLIP_PLANE0, clipPlane);
   
     if (brojac > 2000) {
         glPushMatrix();
         glEnable(GL_CLIP_PLANE0);
+         if (start_cone == 0)
+             start_cone = 1;
+       // start_cone = animation_clip_cone == 0 ? 1 ;
+        //printf("%d\n", start_cone);
         glTranslatef(0, 0, 2.2);
         float koef = brojac < 3000 ? (brojac - 2000) / 1000.0f : 1.05;
         glBegin(GL_TRIANGLE_FAN);
@@ -353,6 +368,7 @@ static void delete_cone()
             }
         glEnd();
         glDisable(GL_CLIP_PLANE0);
+        //start_cone = start_cone == 0 ? 1 : 2;
         if (brojac > 3000) {
             glBegin(GL_TRIANGLE_FAN);
                 glNormal3f(0, 0, 1);
@@ -373,6 +389,41 @@ static void delete_cone()
     }
     
 }
+
+
+   /*  glBegin(GL_TRIANGLE_FAN);
+        //glNormal3f(0, 0, 1);
+        glVertex3f(0, 0, 0);
+        for (float i = 0.0; i <= 30; i += 0.02) {
+            float x =  cosf(i * 2 * M_PI);
+            float y =  sinf(i * 2 * M_PI);
+            //glNormal3f(0, 0, 1);
+            glVertex3f(x, y, 0);
+        }
+    glEnd();*/ 
+// void draw_circle(float x, float y, float radius) { 
+//     glMatrixMode(GL_MODELVIEW);
+//     glPushMatrix();
+//     glLoadIdentity();
+//     glTranslatef(x, y, 2.2);
+//     static const int circle_points = 100;
+//     float angle = 2.0 * 3.1416f / circle_points;
+// 
+//     // this code (mostly) copied from question:
+//     glBegin(GL_POLYGON);
+//     double angle1=0.0;
+//     glVertex2d(radius * cos(0.0) , radius * sin(0.0));
+//     int i;
+//     for (i=0; i<circle_points; i++)
+//     {       
+//         glVertex2d(radius * cos(angle1), radius *sin(angle1));
+//         angle1 += angle;
+//     }
+//     glEnd();
+//     glPopMatrix();
+// }
+//     */
+
 
 static void my_obj()
 {    
@@ -424,7 +475,30 @@ static void my_obj()
     if (brojac == 4000)
             animation_clip_cone = 0.001;
     delete_cone();
-
+//     if (start_cone == 1)
+//         start_cone = 2;
+    
+    if (brojac > 6000 && brojac<8000)
+    {
+       look_up();
+    }
+    if (brojac > 8000)
+    {
+        move_camera_circle=1;
+        look_down();
+    }
+    
+//     if (brojac > 7000)
+//     {
+//         glPushMatrix();
+//         glColor3f(1.0,0.0,0.0);
+//         //glTranslatef(0,0,0);
+//         draw_circle(0,0,1);
+//         glPopMatrix();
+//     }
+    
+    
+    
     //glLineWidth(1);
     glPushMatrix();
     glColor3f(0.85, 0.85, 0.1);
