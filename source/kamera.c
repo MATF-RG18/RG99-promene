@@ -1,4 +1,4 @@
-#include "kamera.h"
+#include "../header/kamera.h"
 
 float move_camera_circle = 0;
 
@@ -23,9 +23,26 @@ void init(void)
     glEnable(GL_NORMALIZE); 
     
     glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();   
+    glLoadIdentity();
     convert_decart();
-    gluLookAt(kamera.x, kamera.y, kamera.z, 0, 0, 0, 0, 0, 1);
+    if (indikator_kamera){
+        
+//         if (kamera.y>=0){
+//             kamera.phi -= translacija_x;
+//             convert_decart();
+//             gluLookAt(kamera.x, kamera.y, kamera.z, 0, 0, 0, 0, 0, 1);
+//         }
+//         else{
+//             kamera.phi = 0;
+//             convert_decart();
+//             gluLookAt(kamera.x, kamera.y, kamera.z, 0, 0, 0, 0, 0, 1);
+//         }
+        gluLookAt(kamera.x, 0, kamera.z, 0, 0, 0, 0, 0, 1);
+    }
+    else
+        gluLookAt(kamera.x, kamera.y, kamera.z, 0, 0, 0, 0, 0, 1);
+    //gluLookAt(5, 0, 2, 0, 0, 0, 0, 0, 1);
+    
 }
 void camera_init(void)
 {

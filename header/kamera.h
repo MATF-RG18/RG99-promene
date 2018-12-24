@@ -24,6 +24,8 @@
 #define DPHI M_PI/90
 #define DTHETA M_PI/90
 
+extern double translacija_x;
+extern int indikator_kamera;
 struct kamera
 {
     double x,y,z;

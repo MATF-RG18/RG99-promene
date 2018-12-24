@@ -1,40 +1,7 @@
-#include "moji_objekti.h"
+#include "../header/moji_objekti.h"
 #include <stdio.h>
-
-
- /*  glBegin(GL_TRIANGLE_FAN);
-        //glNormal3f(0, 0, 1);
-        glVertex3f(0, 0, 0);
-        for (float i = 0.0; i <= 30; i += 0.02) {
-            float x =  cosf(i * 2 * M_PI);
-            float y =  sinf(i * 2 * M_PI);
-            //glNormal3f(0, 0, 1);
-            glVertex3f(x, y, 0);
-        }
-    glEnd();*/ 
-// void draw_circle(float x, float y, float radius) { 
-//     glMatrixMode(GL_MODELVIEW);
-//     glPushMatrix();
-//     glLoadIdentity();
-//     glTranslatef(x, y, 2.2);
-//     static const int circle_points = 100;
-//     float angle = 2.0 * 3.1416f / circle_points;
-// 
-//     // this code (mostly) copied from question:
-//     glBegin(GL_POLYGON);
-//     double angle1=0.0;
-//     glVertex2d(radius * cos(0.0) , radius * sin(0.0));
-//     int i;
-//     for (i=0; i<circle_points; i++)
-//     {       
-//         glVertex2d(radius * cos(angle1), radius *sin(angle1));
-//         angle1 += angle;
-//     }
-//     glEnd();
-//     glPopMatrix();
-// }
-//     */
-
+double translacija_x = -2.0;
+int indikator_kamera = 0;
 
 void my_obj()
 {    
@@ -70,7 +37,7 @@ void my_obj()
         
         glutSolidSphere(0.05, 100, 100);
         
-       // glLineWidth(1);
+        glLineWidth(10);
         //int lajnvidth=-1;
         //glGetIntegerv(GL_LINE_WIDTH, &lajnvidth);
         //printf("%d\n", lajnvidth);
@@ -82,13 +49,11 @@ void my_obj()
     }
     glPopMatrix();
     
-  
     if (brojac == 4000)
             animation_clip_cone = 0.001;
-    delete_cone();
-//     if (start_cone == 1)
-//         start_cone = 2;
-    
+    if (brojac > 2000)
+        delete_cone();
+ 
     if (brojac > 6000 && brojac<8000)
     {
        look_up();
@@ -103,18 +68,6 @@ void my_obj()
         draw_lines();
     }
     
-//     if (brojac > 7000)
-//     {
-//         glPushMatrix();
-//         glColor3f(1.0,0.0,0.0);
-//         //glTranslatef(0,0,0);
-//         draw_circle(0,0,1);
-//         glPopMatrix();
-//     }
-    
-    
-    
-    //glLineWidth(1);
     glPushMatrix();
     glColor3f(0.85, 0.85, 0.1);
     glutWireCube(1);
@@ -150,7 +103,7 @@ void delete_cone()
     if (brojac > 2000) {
         glPushMatrix();
         glEnable(GL_CLIP_PLANE0);
-         if (start_cone == 0)
+        if (start_cone == 0)
              start_cone = 1;
        // start_cone = animation_clip_cone == 0 ? 1 ;
         //printf("%d\n", start_cone);
@@ -168,8 +121,8 @@ void delete_cone()
             }
         glEnd();
         glDisable(GL_CLIP_PLANE0);
-        //start_cone = start_cone == 0 ? 1 : 2;
-        if (brojac > 3000) {
+        
+        if (brojac > 3000 && brojac<10000) {
             glBegin(GL_TRIANGLE_FAN);
                 glNormal3f(0, 0, 1);
                 glVertex3f(0, 0, 0);
@@ -186,8 +139,7 @@ void delete_cone()
         
         glPopMatrix(); 
         
-    }
-    
+    }    
 }
 
 void draw_lines()
@@ -196,10 +148,10 @@ void draw_lines()
     
         
         float tacka1[3], tacka2[3];
-        
+        if (brojac < 12000){
         if (brojac < 11000) {
             float koef = (brojac - 10000) / 1000.0f;
-            printf("%f\n", koef);
+            //printf("%f\n", koef);
             tacka1[0] = 2 * koef;            
             tacka1[1] = -2 * koef;
             tacka1[2] = 2.2;
@@ -225,7 +177,21 @@ void draw_lines()
         glVertex3f(0, 0, 2.2);
         glVertex3f(tacka2[0], tacka2[1], tacka2[2]);
     glEnd();
-    glPopMatrix();
+        }
     
+    else{
+        indikator_kamera = 1; 
+        glBegin(GL_LINES);
+            glVertex3f(2, -2, 2.2);
+            glVertex3f(translacija_x, 2, 2.2);
+        glEnd();
+    }
+    glPopMatrix();    
+}
 
+void draw_square()
+{
+    if (brojac > 11000){
+        
+    }
 }

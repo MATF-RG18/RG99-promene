@@ -1,8 +1,8 @@
 PROGRAM = promene
 CC      = gcc
 CFLAGS  = -g -Wall -I/usr/X11R6/include -I/usr/pkg/include
-PROGR   = promene.c kamera.c moji_objekti.c koor_sistem.c osvetljenje.c display.c
-ADD 	= kamera.h moji_objekti.h koor_sistem.h osvetljenje.h display.h
+PROGR   = source/promene.c source/kamera.c source/moji_objekti.c source/koor_sistem.c source/osvetljenje.c source/display.c
+ADD 	= header/kamera.h header/moji_objekti.h header/koor_sistem.h header/osvetljenje.h header/display.h
 LDFLAGS = -L/usr/X11R6/lib -L/usr/pkg/lib
 LDLIBS  = -lglut -lGLU -lGL -lm
 

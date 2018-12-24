@@ -1,4 +1,4 @@
-#include "osvetljenje.h"
+#include "../header/osvetljenje.h"
 
 void init_lights()
 {

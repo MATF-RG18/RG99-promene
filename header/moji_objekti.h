@@ -9,8 +9,11 @@
 extern int brojac;
 extern float animation_clip_cone;
 extern int start_cone;
+double translacija_x;
+int indikator_kamera;
 
 void my_obj();
 void delete_cone();
 void draw_eyes();
 void draw_lines();
+void draw_square();

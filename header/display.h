@@ -8,6 +8,7 @@
 #include "koor_sistem.h"
 
 extern float move_camera_circle;
+extern double translacija_x;
 
 int brojac;
 int timer_active;

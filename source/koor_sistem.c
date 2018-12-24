@@ -1,4 +1,4 @@
-#include "koor_sistem.h"
+#include "../header/koor_sistem.h"
 
 
 void coord_sys(void)

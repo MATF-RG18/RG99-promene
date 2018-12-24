@@ -1,8 +1,8 @@
-#include "moji_objekti.h"
-#include "koor_sistem.h"
-#include "osvetljenje.h"
-#include "kamera.h"
-#include "display.h"
+#include "../header/moji_objekti.h"
+#include "../header/koor_sistem.h"
+#include "../header/osvetljenje.h"
+#include "../header/kamera.h"
+#include "../header/display.h"
 
 
 int main(int argc, char **argv)

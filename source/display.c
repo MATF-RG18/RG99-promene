@@ -1,4 +1,4 @@
-#include "display.h"
+#include "../header/display.h"
 
 int brojac = 0;
 int timer_active = 0;
@@ -89,10 +89,8 @@ void on_timer(int value)
     /* Azurira se vreme simulacije. */
     brojac += 50;
     move_camera_circle += 0.1;
-
-    /* Forsira se ponovno iscrtavanje prozora. */
-    glutPostRedisplay();
-
+    if (translacija_x <= 2)
+        translacija_x += M_PI/90;
     /* Po potrebi se ponovo postavlja tajmer. */
     
     if (brojac % 1000 == 0 && brojac<=4000) {
@@ -106,6 +104,9 @@ void on_timer(int value)
     
     if (timer_active)
         glutTimerFunc(50, on_timer, 0);
+    /* Forsira se ponovno iscrtavanje prozora. */
+    glutPostRedisplay();
+    
 }
 
 void init_main(int* argc, char** argv)
@@ -126,7 +127,7 @@ void init_main(int* argc, char** argv)
     glClearColor(0,0,0,0);
     glEnable(GL_COLOR_MATERIAL);
     camera_init();
-    
+    glLineWidth(1);
     
     glEnable(GL_DEPTH_TEST);
     
