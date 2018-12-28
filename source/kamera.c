@@ -25,19 +25,37 @@ void init(void)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     convert_decart();
-    if (indikator_kamera){
+    printf("%f\n", kamera.theta);
+    if (indikator_kamera==1){
         
-//         if (kamera.y>=0){
-//             kamera.phi -= translacija_x;
-//             convert_decart();
-//             gluLookAt(kamera.x, kamera.y, kamera.z, 0, 0, 0, 0, 0, 1);
-//         }
-//         else{
-//             kamera.phi = 0;
-//             convert_decart();
-//             gluLookAt(kamera.x, kamera.y, kamera.z, 0, 0, 0, 0, 0, 1);
-//         }
-        gluLookAt(kamera.x, 0, kamera.z, 0, 0, 0, 0, 0, 1);
+        if (kamera.phi>0){
+            kamera.phi -= translacija_x;
+            //convert_decart();
+            gluLookAt(kamera.x, kamera.y, kamera.z, 0, 0, 0, 0, 0, 1);
+        }
+        else{
+            kamera.phi = 0;
+            //convert_decart();
+            gluLookAt(kamera.x, kamera.y, kamera.z, 0, 0, 0, 0, 0, 1);
+        }
+//         kamera.phi = 0;
+//         convert_decart();
+//         gluLookAt(kamera.x, kamera.y, kamera.z, 0, 0, 0, 0, 0, 1);
+    }
+    
+    else if (indikator_kamera==2){
+        if (kamera.theta<M_PI/2){
+            kamera.theta += M_PI/60;
+            printf("%f\n", kamera.theta);
+            //convert_decart();
+            gluLookAt(kamera.x, kamera.y, kamera.z, 0, 0, 0, 0, 0, 1);
+        }
+        else if (kamera.theta>=M_PI/2){
+            kamera.theta = M_PI/2;
+            printf("final: %f\n", kamera.theta);
+            //convert_decart();
+            gluLookAt(kamera.x, kamera.y, kamera.z, 0, 0, 0, 0, 0, 1);
+        }
     }
     else
         gluLookAt(kamera.x, kamera.y, kamera.z, 0, 0, 0, 0, 0, 1);

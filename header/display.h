@@ -9,7 +9,9 @@
 
 extern float move_camera_circle;
 extern double translacija_x;
+extern int indikator_kamera;
 
+int indikator_kvadrat;
 int brojac;
 int timer_active;
 float animation_clip_cone;

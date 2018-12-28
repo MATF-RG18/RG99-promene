@@ -68,6 +68,8 @@ void my_obj()
         draw_lines();
     }
     
+    draw_square();
+    
     glPushMatrix();
     glColor3f(0.85, 0.85, 0.1);
     glutWireCube(1);
@@ -191,7 +193,8 @@ void draw_lines()
 
 void draw_square()
 {
-    if (brojac > 11000){
+    if (indikator_kvadrat==1){
+        indikator_kamera = 2;
         
     }
 }

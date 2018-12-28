@@ -5,6 +5,7 @@ int timer_active = 0;
 float animation_clip_cone = 0;
 int start_line = 0;
 int start_cone = 0;
+int indikator_kvadrat = 0;
 
 void on_keyboard(unsigned char key, int x, int y)
 {
@@ -90,7 +91,11 @@ void on_timer(int value)
     brojac += 50;
     move_camera_circle += 0.1;
     if (translacija_x <= 2)
-        translacija_x += M_PI/90;
+        translacija_x += M_PI/200;
+    else
+        indikator_kvadrat = 1;
+    
+        
     /* Po potrebi se ponovo postavlja tajmer. */
     
     if (brojac % 1000 == 0 && brojac<=4000) {

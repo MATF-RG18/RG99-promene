@@ -6,6 +6,7 @@
 #include <GL/glut.h>
 #include <math.h>
 
+extern int indikator_kvadrat;
 extern int brojac;
 extern float animation_clip_cone;
 extern int start_cone;
