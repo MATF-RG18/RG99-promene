@@ -10,8 +10,13 @@ extern int indikator_kvadrat;
 extern int brojac;
 extern float animation_clip_cone;
 extern int start_cone;
+extern double nova_kamera;
+
+
 double translacija_x;
 int indikator_kamera;
+int ind;
+float prva_prava;
 
 void my_obj();
 void delete_cone();

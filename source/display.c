@@ -6,6 +6,8 @@ float animation_clip_cone = 0;
 int start_line = 0;
 int start_cone = 0;
 int indikator_kvadrat = 0;
+double uvecaj_theta = M_PI/60;
+
 
 void on_keyboard(unsigned char key, int x, int y)
 {
@@ -92,9 +94,13 @@ void on_timer(int value)
     move_camera_circle += 0.1;
     if (translacija_x <= 2)
         translacija_x += M_PI/200;
-    else
-        indikator_kvadrat = 1;
+    else{
+        if (indikator_kvadrat!=2)
+            indikator_kvadrat = 1;
+    }
+
     
+        
         
     /* Po potrebi se ponovo postavlja tajmer. */
     

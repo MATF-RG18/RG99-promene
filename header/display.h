@@ -10,7 +10,11 @@
 extern float move_camera_circle;
 extern double translacija_x;
 extern int indikator_kamera;
+extern double granica_theta;
+extern float prva_prava; 
+extern int ind;
 
+double uvecaj_theta;
 int indikator_kvadrat;
 int brojac;
 int timer_active;

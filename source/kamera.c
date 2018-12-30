@@ -1,6 +1,8 @@
 #include "../header/kamera.h"
 
 float move_camera_circle = 0;
+double nova_kamera = 0;
+
 
 void convert_decart(void)
 {
@@ -25,7 +27,7 @@ void init(void)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     convert_decart();
-    printf("%f\n", kamera.theta);
+    //printf("%f\n", kamera.theta);
     if (indikator_kamera==1){
         
         if (kamera.phi>0){
@@ -44,22 +46,26 @@ void init(void)
     }
     
     else if (indikator_kamera==2){
-        if (kamera.theta<M_PI/2){
-            kamera.theta += M_PI/60;
-            printf("%f\n", kamera.theta);
-            //convert_decart();
+        if (kamera.theta<M_PI/3-M_PI/10){
+            kamera.theta +=M_PI/70;
+            //printf("%f\n", kamera.theta);
+            convert_decart();
             gluLookAt(kamera.x, kamera.y, kamera.z, 0, 0, 0, 0, 0, 1);
         }
-        else if (kamera.theta>=M_PI/2){
-            kamera.theta = M_PI/2;
-            printf("final: %f\n", kamera.theta);
-            //convert_decart();
+        else if (kamera.theta>=M_PI/3-M_PI/10){
+            kamera.theta = nova_kamera = kamera.theta;
+            //nova_kamera = kamera.theta;
+            //printf("final: %f\n", kamera.theta);
+            convert_decart();
             gluLookAt(kamera.x, kamera.y, kamera.z, 0, 0, 0, 0, 0, 1);
+            ind = 0;
+            
         }
     }
     else
         gluLookAt(kamera.x, kamera.y, kamera.z, 0, 0, 0, 0, 0, 1);
     //gluLookAt(5, 0, 2, 0, 0, 0, 0, 0, 1);
+   // printf("%d\n", indikator_kamera);
     
 }
 void camera_init(void)

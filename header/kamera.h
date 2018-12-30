@@ -24,8 +24,13 @@
 #define DPHI M_PI/90
 #define DTHETA M_PI/90
 
+double granica_theta;
+
+extern double uvecaj_theta;
 extern double translacija_x;
 extern int indikator_kamera;
+extern int ind;
+extern float prva_prava;
 struct kamera
 {
     double x,y,z;
@@ -35,6 +40,7 @@ struct kamera
 }kamera;
 
 float move_camera_circle;
+double nova_kamera;
 
 void convert_decart(void);
 void on_reshape(int, int);

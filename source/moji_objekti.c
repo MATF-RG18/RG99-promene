@@ -2,7 +2,9 @@
 #include <stdio.h>
 double translacija_x = -2.0;
 int indikator_kamera = 0;
-
+int ind=1;
+float prva_prava = 0;
+float  x = 2, y = -2;
 void my_obj()
 {    
     glPushMatrix();
@@ -148,7 +150,7 @@ void draw_lines()
 {
     glPushMatrix();
     
-        
+        if (brojac<21900){
         float tacka1[3], tacka2[3];
         if (brojac < 12000){
         if (brojac < 11000) {
@@ -188,13 +190,92 @@ void draw_lines()
             glVertex3f(translacija_x, 2, 2.2);
         glEnd();
     }
+        }
     glPopMatrix();    
 }
 
 void draw_square()
 {
-    if (indikator_kvadrat==1){
-        indikator_kamera = 2;
-        
+    printf("indikator_kvadrat: %d\n", indikator_kvadrat);
+    if (indikator_kvadrat==1 && brojac<22000){
+        //printf("square f: %f\n", kamera.theta);
+       // if (kamera.theta <= MAX_THETA)
+        if (ind==1)
+        {
+            indikator_kamera = 2;
+            glBegin(GL_LINES);
+                glVertex3f(2,2,2.2);
+                if (x>=-2){
+                    glVertex3f(x,2,2.2);
+                    x -= 0.02;
+                }
+                else
+                    glVertex3f(-2,2,2.2);
+                
+                glVertex3f(2,-2,2.2);
+                if (x>=-2){
+                    glVertex3f(x,-2,2.2);
+                    x -= 0.02;
+                }
+                else{
+                    glVertex3f(-2,-2,2.2);
+                    
+                }
+            glEnd();
+
+        }
+        if (ind==0)
+        {
+            indikator_kamera=0;
+            kamera.theta = nova_kamera;
+            glBegin(GL_LINES);
+                glVertex3f(2,2,2.2);
+                if (x>=-2){
+                    glVertex3f(x,2,2.2);
+                    x -= 0.02;
+                }
+                else
+                    glVertex3f(-2,2,2.2);
+             glVertex3f(2,-2,2.2);
+                if (x>=-2){
+                    glVertex3f(x,-2,2.2);
+                    x -= 0.02;
+                }
+                else{
+                    glVertex3f(-2,-2,2.2);
+                    
+                    glVertex3f(-2,-2,2.2);
+                    if (y<=2){
+                        glVertex3f(-2,y,2.2);
+                        y += 0.05;
+                    }
+                    else{
+                        glVertex3f(-2,2,2.2);
+                        indikator_kvadrat=2;
+                        printf("brojac: %d\n", brojac);
+                        printf("indikator_kvadrat: %d\n", indikator_kvadrat);
+                        
+                    }
+                }
+                
+            glEnd();
+        }        
+    }
+    else if (indikator_kvadrat == 2){
+        kamera.theta = nova_kamera;
+        printf("indikator_kvadrat: %d\n", indikator_kvadrat);
+        glPushMatrix();
+        //glEnable(GL_COLOR_MATERIAL);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glBegin(GL_POLYGON);
+            
+            glColor3f(0.1,0.2,0.6);
+            glVertex3f(2,-2,2.2);
+            glVertex3f(2,2,2.2);
+            glVertex3f(-2,2,2.2);
+            glVertex3f(-2,-2,2.2);
+        glEnd();
+        //glDisable(GL_COLOR_MATERIAL);
+        glPopMatrix();
     }
 }
