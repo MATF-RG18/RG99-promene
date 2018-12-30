@@ -12,7 +12,7 @@
 #define PHI 0.78
 #define THETA 0.3
 
-#define MAX_R 5
+#define MAX_R 16
 #define MIN_R 1
 #define MAX_PHI 2*M_PI
 #define MIN_PHI 0

@@ -104,7 +104,7 @@ void on_timer(int value)
         
     /* Po potrebi se ponovo postavlja tajmer. */
     
-    if (brojac % 1000 == 0 && brojac<=4000) {
+    if (brojac % 1000 == 0 && brojac<=4000 && brojac>=22000) {
         timer_active = 0;
     }
     

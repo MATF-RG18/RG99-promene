@@ -4,7 +4,8 @@ double translacija_x = -2.0;
 int indikator_kamera = 0;
 int ind=1;
 float prva_prava = 0;
-float  x = 2, y = -2;
+double  x = 2, y = -2, y_k1 = -2, z_k1 = 2.2, y_k2 = -2, z_k2 = 2.2, delta1=0, delta2=0, delta_korak=0.02;
+double y_k_levo1 = 2, z_k_levo1 = 2.2, z_k_iza = 2.2, x_k_iza=2, x_k_ispred = -2, z_k_ispred = 2.2;
 void my_obj()
 {    
     glPushMatrix();
@@ -252,8 +253,8 @@ void draw_square()
                     else{
                         glVertex3f(-2,2,2.2);
                         indikator_kvadrat=2;
-                        printf("brojac: %d\n", brojac);
-                        printf("indikator_kvadrat: %d\n", indikator_kvadrat);
+                        //printf("brojac: %d\n", brojac);
+                        //printf("indikator_kvadrat: %d\n", indikator_kvadrat);
                         
                     }
                 }
@@ -262,20 +263,103 @@ void draw_square()
         }        
     }
     else if (indikator_kvadrat == 2){
+        /* Iscrtavanje kvadrata koji je baza kocke koja dalje treba da nastane */
         kamera.theta = nova_kamera;
-        printf("indikator_kvadrat: %d\n", indikator_kvadrat);
+        //printf("indikator_kvadrat: %d\n", indikator_kvadrat);
         glPushMatrix();
-        //glEnable(GL_COLOR_MATERIAL);
+        
+        if (brojac > 24000){
+            zoom_out();
+            //glRotatef(90,0,0,1);
+        }
+//         glTranslatef(0,2,0);
+//         glRotatef(90.0,0,1.0,0);
+//         glTranslatef(0,-2,0);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glBegin(GL_POLYGON);
-            
-            glColor3f(0.1,0.2,0.6);
-            glVertex3f(2,-2,2.2);
+        glColor3f(0.1,0.2,0.6);
             glVertex3f(2,2,2.2);
             glVertex3f(-2,2,2.2);
             glVertex3f(-2,-2,2.2);
+            glVertex3f(2,-2,2.2);
         glEnd();
-        //glDisable(GL_COLOR_MATERIAL);
+        
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glBegin(GL_POLYGON);
+            glColor3f(0.1,0.2,0.4);
+            
+            if (z_k1<=6.2){
+                glVertex3f(-2,y_k1,z_k1);
+                delta1+=delta_korak;
+                z_k1+=delta_korak; y_k1 += delta_korak;
+            }
+            else
+                glVertex3f(-2,2,6.2);
+            
+            
+            if (z_k2<=6.2){
+                glVertex3f(2,y_k2,z_k2);
+                delta2+=delta_korak;
+                z_k2+=delta_korak; y_k2 += delta_korak;
+            }
+            else
+                glVertex3f(2,2,6.2);
+            glVertex3f(2,2,2.2);
+            glVertex3f(-2,2,2.2);
+        glEnd();
+        
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glBegin(GL_POLYGON);
+            glColor3f(0.1,0.2,0.4);
+            
+            glVertex3f(-2,-2,2.2);
+            glVertex3f(2,-2,2.2);
+            if (z_k_levo1<=6.2){
+                glVertex3f(2,y_k_levo1,z_k_levo1);
+                glVertex3f(-2,y_k_levo1,z_k_levo1);
+                z_k_levo1+=delta_korak; y_k_levo1 -= delta_korak;
+            }
+            else{
+                glVertex3f(2,-2,6.2);
+                glVertex3f(-2,-2,6.2);
+                //printf("brojac: %d\n", brojac);
+            }
+        glEnd();
+        if (brojac > 32000){
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glBegin(GL_POLYGON);
+            glColor3f(0.1,0.2,0.8);
+            glVertex3f(-2,-2,2.2);
+            glVertex3f(-2,2,2.2);
+            if (z_k_iza<=6.2){
+                glVertex3f(x_k_iza,2,z_k_iza);
+                glVertex3f(x_k_iza,-2,z_k_iza);
+                z_k_iza+=delta_korak; x_k_iza -= delta_korak;
+            }
+            else{
+                glVertex3f(-2,2,6.2);
+                glVertex3f(-2,-2,6.2);
+            }
+            
+        glEnd();
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glBegin(GL_POLYGON);
+            glColor3f(0.1,0.4,0.8);
+            glVertex3f(2,-2,2.2);
+            glVertex3f(2,2,2.2);
+            if (z_k_ispred<=6.2){
+                glVertex3f(x_k_ispred,2,z_k_ispred);
+                glVertex3f(x_k_ispred,-2,z_k_ispred);
+                z_k_ispred+=delta_korak; x_k_ispred += delta_korak;
+            }
+            else{
+                glVertex3f(2,2,6.2);
+                glVertex3f(2,-2,6.2);
+            }
+        glEnd();
+        }
+                
+        
         glPopMatrix();
     }
 }
