@@ -197,7 +197,8 @@ void draw_lines()
 
 void draw_square()
 {
-    printf("indikator_kvadrat: %d\n", indikator_kvadrat);
+    //printf("indikator_kvadrat: %d\n", indikator_kvadrat);
+    //if (brojac < )
     if (indikator_kvadrat==1 && brojac<22000){
         //printf("square f: %f\n", kamera.theta);
        // if (kamera.theta <= MAX_THETA)
@@ -355,11 +356,24 @@ void draw_square()
             else{
                 glVertex3f(2,2,6.2);
                 glVertex3f(2,-2,6.2);
+                printf("brojac: %d\n", brojac);
             }
         glEnd();
-        }
-                
         
+        }
+        if (brojac > 42100){
+            glPushMatrix();
+            glBegin(GL_POLYGON);
+            glColor3f(0.1,0.4,0.8);
+            glVertex3f(-2,-2,6.2);
+            glVertex3f(-2,2,6.2);
+            
+            glVertex3f(2,2,6.2);
+            glVertex3f(2,-2,6.2);
+            glEnd();
+            glPopMatrix();
+        }
+            
         glPopMatrix();
     }
 }
