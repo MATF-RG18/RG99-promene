@@ -1,4 +1,5 @@
 #include "../header/moji_objekti.h"
+#include "../header/osvetljenje.h"
 #include <stdio.h>
 double translacija_x = -2.0;
 int indikator_kamera = 0;
@@ -6,6 +7,9 @@ int ind=1;
 float prva_prava = 0;
 double  x = 2, y = -2, y_k1 = -2, z_k1 = 2.2, y_k2 = -2, z_k2 = 2.2, delta1=0, delta2=0, delta_korak=0.02;
 double y_k_levo1 = 2, z_k_levo1 = 2.2, z_k_iza = 2.2, x_k_iza=2, x_k_ispred = -2, z_k_ispred = 2.2;
+double radijus = 2;
+float prozirnost = 1;
+int indikator_prozirnost = 0; 
 void my_obj()
 {    
     glPushMatrix();
@@ -198,7 +202,7 @@ void draw_lines()
 void draw_square()
 {
     //printf("indikator_kvadrat: %d\n", indikator_kvadrat);
-    //if (brojac < )
+    if (brojac < 42200){
     if (indikator_kvadrat==1 && brojac<22000){
         //printf("square f: %f\n", kamera.theta);
        // if (kamera.theta <= MAX_THETA)
@@ -375,5 +379,29 @@ void draw_square()
         }
             
         glPopMatrix();
+    }
+    }
+    else if (brojac>=42200){
+        indikator_prozirnost = 1;
+        indikator_kamera = 0 ;
+        kamera.theta = nova_kamera;
+        //MIN_THETA_CIRCLE = 0;
+        
+        glPushMatrix();
+        glDisable(GL_COLOR_MATERIAL);
+        glTranslatef(0,0,4.2);
+        set_material(1);
+        glutSolidSphere(1, 100,100);
+        glEnable(GL_COLOR_MATERIAL);
+        glPopMatrix();
+        
+        glPushMatrix();
+        glDisable(GL_COLOR_MATERIAL);
+        set_material(0);
+        glTranslatef(0,0,4.2);
+        glutSolidCube(4);
+        glEnable(GL_COLOR_MATERIAL);
+        glPopMatrix();
+        
     }
 }

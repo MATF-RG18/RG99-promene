@@ -13,6 +13,7 @@ extern int indikator_kamera;
 extern double granica_theta;
 extern float prva_prava; 
 extern int ind;
+extern float indikator_prozirnost;
 
 double uvecaj_theta;
 int indikator_kvadrat;

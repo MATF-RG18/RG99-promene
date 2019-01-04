@@ -18,14 +18,14 @@
 #define MIN_PHI 0
 #define MAX_THETA M_PI/2
 #define MIN_THETA -M_PI/2
-#define MIN_THETA_CIRCLE 0.25
+
 
 #define DR 0.05
 #define DPHI M_PI/90
 #define DTHETA M_PI/90
 
 double granica_theta;
-
+float MIN_THETA_CIRCLE;
 extern double uvecaj_theta;
 extern double translacija_x;
 extern int indikator_kamera;

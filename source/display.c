@@ -99,7 +99,10 @@ void on_timer(int value)
             indikator_kvadrat = 1;
     }
 
-    
+    if (indikator_prozirnost && prozirnost>=0.7)
+    {
+        prozirnost -= 0.0001;
+    }
         
         
     /* Po potrebi se ponovo postavlja tajmer. */
@@ -139,6 +142,9 @@ void init_main(int* argc, char** argv)
     glEnable(GL_COLOR_MATERIAL);
     camera_init();
     glLineWidth(1);
+    
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     glEnable(GL_DEPTH_TEST);
     

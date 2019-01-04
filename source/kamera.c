@@ -2,7 +2,7 @@
 
 float move_camera_circle = 0;
 double nova_kamera = 0;
-
+float MIN_THETA_CIRCLE=0.25;
 
 void convert_decart(void)
 {
@@ -65,7 +65,7 @@ void init(void)
     else
         gluLookAt(kamera.x, kamera.y, kamera.z, 0, 0, 0, 0, 0, 1);
     //gluLookAt(5, 0, 2, 0, 0, 0, 0, 0, 1);
-   // printf("%d\n", indikator_kamera);
+    printf("%d\n", indikator_kamera);
     
 }
 void camera_init(void)
@@ -100,10 +100,10 @@ void look_down()
          * ugao se odrzava u intervalu [-89,89] stepeni.
          */
     kamera.theta -= kamera.dtheta;
-    if (kamera.theta < MIN_THETA && move_camera_circle!=1) {
+    if (kamera.theta < MIN_THETA) {
         kamera.theta = MIN_THETA;
     }
-    else if(kamera.theta < MIN_THETA_CIRCLE && move_camera_circle==1)
+    else if(kamera.theta < MIN_THETA_CIRCLE )
     {
         kamera.theta = MIN_THETA_CIRCLE;
     }

@@ -2,9 +2,9 @@
 
 void init_lights()
 {
-    GLfloat light_position[] = { 1, 10, 5, 0 };
+    GLfloat light_position[] = {  1, 15, 5, 0 };
     GLfloat light_ambient[] = { 0.1, 0.1, 0.1, 1 };
-    GLfloat light_diffuse[] = { 1, 1, 1, 1 };
+    GLfloat light_diffuse[] = { 0.7, 0.7, 0.7, 1 };
     GLfloat light_specular[] = { 0.9, 0.9, 0.9, 1 };
 
     glEnable(GL_LIGHTING);
@@ -17,7 +17,7 @@ void init_lights()
 
 void set_material(int id)
 {
-    GLfloat ambient_coeffs[] = { 0.3, 0.3, 0.3, 1 };
+    GLfloat ambient_coeffs[] = { 0.7, 0.7, 0.7, 1 };
     GLfloat diffuse_coeffs[] = { 0.4, 0.4, 0.4, 1 };
     GLfloat specular_coeffs[] = { 1, 1, 1, 1 };
     GLfloat shininess = 30;
@@ -25,19 +25,22 @@ void set_material(int id)
     switch (id) {
         case 0:
             diffuse_coeffs[0] = 1.0;
-            diffuse_coeffs[3] = 0.7;
+            diffuse_coeffs[3] = prozirnost;
             break;
         case 1:
-            diffuse_coeffs[1] = 1.0;
+            diffuse_coeffs[0] = 0;
+            diffuse_coeffs[1] = 0.3;
+            diffuse_coeffs[2] = 0.8;
+            diffuse_coeffs[3] = 0.1;
             break;
         case 2:
             diffuse_coeffs[2] = 1.0;
             break;
     }
 
-    glMaterialfv(GL_FRONT, GL_AMBIENT, ambient_coeffs);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse_coeffs);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, specular_coeffs);
-    glMaterialf(GL_FRONT, GL_SHININESS, shininess);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambient_coeffs);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuse_coeffs);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular_coeffs);
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shininess);
 
 }

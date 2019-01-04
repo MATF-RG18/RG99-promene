@@ -11,9 +11,10 @@ extern int brojac;
 extern float animation_clip_cone;
 extern int start_cone;
 extern double nova_kamera;
-
-
+extern float MIN_THETA_CIRCLE;
 double translacija_x;
+
+float prozirnost;
 int indikator_kamera;
 int ind;
 float prva_prava;
