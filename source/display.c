@@ -68,6 +68,18 @@ void on_keyboard(unsigned char key, int x, int y)
         /* Zaustavlja se simulacija. */
         timer_active = 0;
         break;
+    case 'M':
+    case 'm':
+        radijus += 0.05;
+        glutPostRedisplay();
+        break;
+    case 'N':
+    case 'n':
+        if (radijus>=0)
+            radijus -= 0.05;
+        glutPostRedisplay();
+        break;
+        
     }
         
 }
@@ -78,7 +90,7 @@ void on_display(void)
     init_lights();
     
     my_obj();
-    coord_sys();   
+    //coord_sys();   
    
     glutSwapBuffers();
 }
@@ -101,13 +113,13 @@ void on_timer(int value)
 
     if (indikator_prozirnost && prozirnost>=0.7)
     {
-        prozirnost -= 0.0001;
+        prozirnost -= 0.001;
     }
         
         
     /* Po potrebi se ponovo postavlja tajmer. */
     
-    if (brojac % 1000 == 0 && brojac<=4000 && brojac>=22000) {
+    if (brojac % 1000 == 0 && brojac<=4000) {
         timer_active = 0;
     }
     

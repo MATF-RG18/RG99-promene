@@ -1,5 +1,6 @@
 #include "../header/moji_objekti.h"
 #include "../header/osvetljenje.h"
+#include "../header/display.h"
 #include <stdio.h>
 double translacija_x = -2.0;
 int indikator_kamera = 0;
@@ -7,7 +8,7 @@ int ind=1;
 float prva_prava = 0;
 double  x = 2, y = -2, y_k1 = -2, z_k1 = 2.2, y_k2 = -2, z_k2 = 2.2, delta1=0, delta2=0, delta_korak=0.02;
 double y_k_levo1 = 2, z_k_levo1 = 2.2, z_k_iza = 2.2, x_k_iza=2, x_k_ispred = -2, z_k_ispred = 2.2;
-double radijus = 2;
+float radijus = 2;
 float prozirnost = 1;
 int indikator_prozirnost = 0; 
 void my_obj()
@@ -77,10 +78,12 @@ void my_obj()
     
     draw_square();
     
-    glPushMatrix();
-    glColor3f(0.85, 0.85, 0.1);
-    glutWireCube(1);
-    glPopMatrix();
+    
+    
+//     glPushMatrix();
+//     glColor3f(0.85, 0.85, 0.1);
+//     glutWireCube(1);
+//     glPopMatrix();
     
     glPushMatrix();
     glTranslatef(0, 0, -3);
@@ -202,7 +205,7 @@ void draw_lines()
 void draw_square()
 {
     //printf("indikator_kvadrat: %d\n", indikator_kvadrat);
-    if (brojac < 42200){
+    if (brojac < 32000){
     if (indikator_kvadrat==1 && brojac<22000){
         //printf("square f: %f\n", kamera.theta);
        // if (kamera.theta <= MAX_THETA)
@@ -269,11 +272,12 @@ void draw_square()
     }
     else if (indikator_kvadrat == 2){
         /* Iscrtavanje kvadrata koji je baza kocke koja dalje treba da nastane */
+        indikator_kamera = 0;
         kamera.theta = nova_kamera;
         //printf("indikator_kvadrat: %d\n", indikator_kvadrat);
         glPushMatrix();
         
-        if (brojac > 24000){
+        if (brojac > 24000 && brojac < 32000){
             zoom_out();
             //glRotatef(90,0,0,1);
         }
@@ -330,7 +334,7 @@ void draw_square()
                 //printf("brojac: %d\n", brojac);
             }
         glEnd();
-        if (brojac > 32000){
+        //if (brojac > 32000){
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glBegin(GL_POLYGON);
             glColor3f(0.1,0.2,0.8);
@@ -360,15 +364,15 @@ void draw_square()
             else{
                 glVertex3f(2,2,6.2);
                 glVertex3f(2,-2,6.2);
-                printf("brojac: %d\n", brojac);
+                
             }
         glEnd();
         
-        }
-        if (brojac > 42100){
+        //}
+        if (brojac > 32000){
             glPushMatrix();
             glBegin(GL_POLYGON);
-            glColor3f(0.1,0.4,0.8);
+            glColor3f(0.8,0.4,0.1);
             glVertex3f(-2,-2,6.2);
             glVertex3f(-2,2,6.2);
             
@@ -376,22 +380,26 @@ void draw_square()
             glVertex3f(2,-2,6.2);
             glEnd();
             glPopMatrix();
+            indikator_kvadrat = 0;
         }
             
         glPopMatrix();
     }
     }
-    else if (brojac>=42200){
+    else if (brojac>=32000){
+        indikator_kvadrat = 0;
         indikator_prozirnost = 1;
-        indikator_kamera = 0 ;
+        MIN_THETA_CIRCLE = 0;
         kamera.theta = nova_kamera;
+        //indikator_kamera = 0 ;
+        init();
         //MIN_THETA_CIRCLE = 0;
         
         glPushMatrix();
         glDisable(GL_COLOR_MATERIAL);
         glTranslatef(0,0,4.2);
         set_material(1);
-        glutSolidSphere(1, 100,100);
+        glutSolidSphere(radijus, 100,100);
         glEnable(GL_COLOR_MATERIAL);
         glPopMatrix();
         
@@ -404,4 +412,10 @@ void draw_square()
         glPopMatrix();
         
     }
+    printf("brojac: %d\n", brojac);
+    printf("kvadrat: %d\n", indikator_kvadrat);
+    printf("kamera: %d\n", indikator_kamera);
+    
+    
+    
 }

@@ -18,7 +18,7 @@ void init_lights()
 void set_material(int id)
 {
     GLfloat ambient_coeffs[] = { 0.7, 0.7, 0.7, 1 };
-    GLfloat diffuse_coeffs[] = { 0.4, 0.4, 0.4, 1 };
+    GLfloat diffuse_coeffs[] = { 0.4, 0.1, 0.1, 1 };
     GLfloat specular_coeffs[] = { 1, 1, 1, 1 };
     GLfloat shininess = 30;
 
@@ -28,10 +28,10 @@ void set_material(int id)
             diffuse_coeffs[3] = prozirnost;
             break;
         case 1:
-            diffuse_coeffs[0] = 0;
-            diffuse_coeffs[1] = 0.3;
+            diffuse_coeffs[0] = 0.1;
+            diffuse_coeffs[1] = 0.1;
             diffuse_coeffs[2] = 0.8;
-            diffuse_coeffs[3] = 0.1;
+            diffuse_coeffs[3] = 1;
             break;
         case 2:
             diffuse_coeffs[2] = 1.0;

@@ -62,10 +62,12 @@ void init(void)
             
         }
     }
-    else
+    else{
+        //look_up();
         gluLookAt(kamera.x, kamera.y, kamera.z, 0, 0, 0, 0, 0, 1);
+        }
     //gluLookAt(5, 0, 2, 0, 0, 0, 0, 0, 1);
-    printf("%d\n", indikator_kamera);
+    //printf("%d\n", indikator_kamera);
     
 }
 void camera_init(void)

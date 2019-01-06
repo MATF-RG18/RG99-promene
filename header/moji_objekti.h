@@ -18,6 +18,7 @@ float prozirnost;
 int indikator_kamera;
 int ind;
 float prva_prava;
+float radijus;
 
 void my_obj();
 void delete_cone();
