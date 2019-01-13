@@ -12,7 +12,7 @@ int ind=1;
 float prva_prava = 0;
 double  x = 2, y = -2, y_k1 = -2, z_k1 = 2.2, y_k2 = -2, z_k2 = 2.2, delta1=0, delta2=0, delta_korak=0.02;
 double y_k_levo1 = 2, z_k_levo1 = 2.2, z_k_iza = 2.2, x_k_iza=2, x_k_ispred = -2, z_k_ispred = 2.2;
-float radijus = 2;
+float radijus = 1;
 float prozirnost = 1;
 int indikator_prozirnost = 0; 
 
@@ -84,12 +84,13 @@ void my_obj()
     
     draw_square();
     
-    
-    
-//     glPushMatrix();
-//     glColor3f(0.85, 0.85, 0.1);
-//     glutWireCube(1);
-//     glPopMatrix();
+    /* kocke koje su kasnije iscrtavane pomocu glBegin, glEnd 
+      da bi se primenila tekstura na njih. 
+      
+    glPushMatrix();
+    glColor3f(0.85, 0.85, 0.1);
+    glutWireCube(1);
+    glPopMatrix();
     
     glPushMatrix();
     glTranslatef(0, 0, -3);
@@ -107,66 +108,73 @@ void my_obj()
     glTranslatef(0, 0, -8);
     glColor3f(0.4, 0.4, 0.4);
     glutSolidCube(5);
+    glPopMatrix();*/
+    
+    /* Vodena povrsina ispod kocki */
+    /*
+    glPushMatrix();
+    glBindTexture(GL_TEXTURE_2D, names[0]);
+    glBegin(GL_POLYGON);
+        glNormal3f(0, 0, 1);
+        glTexCoord2f(1, 0);
+        glVertex3f(-DESETICA*10, -DESETICA*10, -40);    
+                
+        glTexCoord2f(0, 0);
+        glVertex3f(DESETICA*10, -DESETICA*10, -40);
+                
+        glTexCoord2f(0, 1); 
+        glVertex3f(DESETICA*10, DESETICA*10, -40);
+                    
+        glTexCoord2f(1, 1);
+        glVertex3f(-DESETICA*10, DESETICA*10, -40);
+    glEnd();
+    glBindTexture(GL_TEXTURE_2D, 0);    
+    glPopMatrix(); */
+    
+    /* Nebo koje okruzuje morsku povrsinu */
+    /*
+    glPushMatrix();
+    
+    glBindTexture(GL_TEXTURE_2D, names[1]);
+    glBegin(GL_POLYGON);
+        glNormal3f(1, 0, 0);
+        glTexCoord2f(1, 0);
+        glVertex3f(-DESETICA*10, -DESETICA*10, -40);    
+                
+        glTexCoord2f(0, 0);
+        glVertex3f(-DESETICA*10, DESETICA*10, -40);
+                
+        glTexCoord2f(0, 1); 
+        glVertex3f(-DESETICA*10, DESETICA*10, -40+DESETICA*10);
+                    
+        glTexCoord2f(1, 1);
+        glVertex3f(-DESETICA*10, -DESETICA*10, -40+DESETICA*10);
+    glEnd();
+    glBindTexture(GL_TEXTURE_2D, 0);
     glPopMatrix();
     
-//     glPushMatrix();
-//     glBindTexture(GL_TEXTURE_2D, names[0]);
-//     glBegin(GL_POLYGON);
-//         glNormal3f(0, 0, 1);
-//         glTexCoord2f(1, 0);
-//         glVertex3f(-DESETICA*10, -DESETICA*10, -40);    
-//                 
-//         glTexCoord2f(0, 0);
-//         glVertex3f(DESETICA*10, -DESETICA*10, -40);
-//                 
-//         glTexCoord2f(0, 1); 
-//         glVertex3f(DESETICA*10, DESETICA*10, -40);
-//                     
-//         glTexCoord2f(1, 1);
-//         glVertex3f(-DESETICA*10, DESETICA*10, -40);
-//     glEnd();
-//     glBindTexture(GL_TEXTURE_2D, 0);    
-//     glPopMatrix();
+    glPushMatrix();
+    glBindTexture(GL_TEXTURE_2D, names[1]);
+    glBegin(GL_POLYGON);
+        glNormal3f(1, 0, 0);
+        glTexCoord2f(1, 0);
+        glVertex3f(DESETICA*10, -DESETICA*10, -40);    
+                
+        glTexCoord2f(0, 0);
+        glVertex3f(-DESETICA*10, -DESETICA*10, -40);
+                
+        glTexCoord2f(0, 1); 
+        glVertex3f(-DESETICA*10, -DESETICA*10, -40+DESETICA*10);
+                    
+        glTexCoord2f(1, 1);
+        glVertex3f(DESETICA*10, -DESETICA*10, -40+DESETICA*10);
+    glEnd();
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glPopMatrix();*/
     
-//     glPushMatrix();
-//     
-//     glBindTexture(GL_TEXTURE_2D, names[1]);
-//     glBegin(GL_POLYGON);
-//         glNormal3f(1, 0, 0);
-//         glTexCoord2f(1, 0);
-//         glVertex3f(-DESETICA*10, -DESETICA*10, -40);    
-//                 
-//         glTexCoord2f(0, 0);
-//         glVertex3f(-DESETICA*10, DESETICA*10, -40);
-//                 
-//         glTexCoord2f(0, 1); 
-//         glVertex3f(-DESETICA*10, DESETICA*10, -40+DESETICA*10);
-//                     
-//         glTexCoord2f(1, 1);
-//         glVertex3f(-DESETICA*10, -DESETICA*10, -40+DESETICA*10);
-//     glEnd();
-//     glBindTexture(GL_TEXTURE_2D, 0);
-//     glPopMatrix();
-//     
-//     glPushMatrix();
-//     glBindTexture(GL_TEXTURE_2D, names[1]);
-//     glBegin(GL_POLYGON);
-//         glNormal3f(1, 0, 0);
-//         glTexCoord2f(1, 0);
-//         glVertex3f(DESETICA*10, -DESETICA*10, -40);    
-//                 
-//         glTexCoord2f(0, 0);
-//         glVertex3f(-DESETICA*10, -DESETICA*10, -40);
-//                 
-//         glTexCoord2f(0, 1); 
-//         glVertex3f(-DESETICA*10, -DESETICA*10, -40+DESETICA*10);
-//                     
-//         glTexCoord2f(1, 1);
-//         glVertex3f(DESETICA*10, -DESETICA*10, -40+DESETICA*10);
-//     glEnd();
-//     glBindTexture(GL_TEXTURE_2D, 0);
-//     glPopMatrix();
     
+    
+    /* Iscrtavanje pozadine */
     glPushMatrix();
     
     glDisable(GL_COLOR_MATERIAL);
@@ -178,13 +186,88 @@ void my_obj()
     GLUquadricObj* sfera_obj2 = gluNewQuadric();
     gluQuadricTexture(sfera_obj2, GLU_TRUE);
     glTranslatef(0,0,0);
-    gluSphere(sfera_obj2, 20, 5, 5);
+    gluSphere(sfera_obj2, 20, 10, 10);
     glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_TEXTURE_2D);
     glEnable(GL_COLOR_MATERIAL);
     
     glPopMatrix();
+    
+    //piramida();
+    kocke();
             
+}
+
+void kocke(){
+    //iscrtavanje prve kocke
+    
+    glPushMatrix();
+    //glTranslatef(0, 0, -10.5);
+    //glColor3f(0.8, 0.8, 0.8);
+    //glBindTexture(GL_TEXTURE_2D, names[2]);
+    tekstura_kocke = SOIL_load_OGL_texture(TEKSTURA_KOCKE,
+    SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
+    glBindTexture(GL_TEXTURE_2D, tekstura_kocke);
+    
+    glBegin(GL_POLYGON);
+        glNormal3f(1, 0, 0);
+        glTexCoord2f(1, 0);
+        glVertex3f(2.5, -2.5, 0);    
+                
+        glTexCoord2f(0, 0);
+        glVertex3f(2.5, 2.5, 0);
+                
+        glTexCoord2f(0, 1); 
+        glVertex3f(2.5, 2.5, 5);
+                    
+        glTexCoord2f(1, 1);
+        glVertex3f(2.5, -2.5, 5);
+    glEnd();
+    glBindTexture(GL_TEXTURE_2D, 0);   
+    glPopMatrix();
+    
+    
+    
+}
+
+void piramida(){
+    
+    glPushMatrix();
+    glBegin(GL_TRIANGLES);          
+      // Front
+        
+      glColor3f(1.0f, 0.0f, 0.0f);     // Red
+      glVertex3f( 0.0f, 1.0f, 0.0f);
+      glColor3f(0.0f, 1.0f, 0.0f);     // Green
+      glVertex3f(-1.0f, -1.0f, 1.0f);
+      glColor3f(0.0f, 0.0f, 1.0f);     // Blue
+      glVertex3f(1.0f, -1.0f, 1.0f);
+ 
+      // Right
+      glColor3f(1.0f, 0.0f, 0.0f);     // Red
+      glVertex3f(0.0f, 1.0f, 0.0f);
+      glColor3f(0.0f, 0.0f, 1.0f);     // Blue
+      glVertex3f(1.0f, -1.0f, 1.0f);
+      glColor3f(0.0f, 1.0f, 0.0f);     // Green
+      glVertex3f(1.0f, -1.0f, -1.0f);
+ 
+      // Back
+      glColor3f(1.0f, 0.0f, 0.0f);     // Red
+      glVertex3f(0.0f, 1.0f, 0.0f);
+      glColor3f(0.0f, 1.0f, 0.0f);     // Green
+      glVertex3f(1.0f, -1.0f, -1.0f);
+      glColor3f(0.0f, 0.0f, 1.0f);     // Blue
+      glVertex3f(-1.0f, -1.0f, -1.0f);
+ 
+      // Left
+      glColor3f(1.0f,0.0f,0.0f);       // Red
+      glVertex3f( 0.0f, 1.0f, 0.0f);
+      glColor3f(0.0f,0.0f,1.0f);       // Blue
+      glVertex3f(-1.0f,-1.0f,-1.0f);
+      glColor3f(0.0f,1.0f,0.0f);       // Green
+      glVertex3f(-1.0f,-1.0f, 1.0f);
+   glEnd();   // Done drawing the pyramid
+   glPopMatrix();
 }
 
 void delete_cone()
@@ -481,7 +564,7 @@ void draw_square()
         glPushMatrix();
         glDisable(GL_COLOR_MATERIAL);
         tekstura_sfere = SOIL_load_OGL_texture(TEKSTURA_SFERE,
-    SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
+        SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, tekstura_sfere);
         
@@ -489,12 +572,8 @@ void draw_square()
         gluQuadricTexture(sfera_obj, GLU_TRUE);
         glTranslatef(0,0,4.2);
         //set_material(1);
-        gluSphere(sfera_obj, radijus, 100, 100);
-        
-        
+        gluSphere(sfera_obj, radijus, 100, 100);        
         //glutSolidSphere(radijus, 100,100);
-        
-       
         
         glBindTexture(GL_TEXTURE_2D, 0);
         glDisable(GL_TEXTURE_2D);

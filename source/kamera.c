@@ -105,10 +105,10 @@ void look_down()
     if (kamera.theta < MIN_THETA) {
         kamera.theta = MIN_THETA;
     }
-    else if(kamera.theta < MIN_THETA_CIRCLE )
-    {
-        kamera.theta = MIN_THETA_CIRCLE;
-    }
+//     else if(kamera.theta < MIN_THETA_CIRCLE )
+//     {
+//         kamera.theta = MIN_THETA_CIRCLE;
+//     }
 }
 
 void look_up()
