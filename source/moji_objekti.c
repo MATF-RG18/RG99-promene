@@ -173,7 +173,7 @@ void my_obj()
     glPopMatrix();*/
     
     
-    
+    kocke();
     /* Iscrtavanje pozadine */
     glPushMatrix();
     
@@ -194,7 +194,7 @@ void my_obj()
     glPopMatrix();
     
     //piramida();
-    kocke();
+    
             
 }
 
@@ -202,7 +202,7 @@ void kocke(){
     //iscrtavanje prve kocke
     
     glPushMatrix();
-    //glTranslatef(0, 0, -10.5);
+    //glTranslatef(0, 0, -10.5)
     //glColor3f(0.8, 0.8, 0.8);
     //glBindTexture(GL_TEXTURE_2D, names[2]);
     tekstura_kocke = SOIL_load_OGL_texture(TEKSTURA_KOCKE,
