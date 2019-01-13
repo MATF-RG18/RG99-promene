@@ -178,7 +178,7 @@ void my_obj()
     GLUquadricObj* sfera_obj2 = gluNewQuadric();
     gluQuadricTexture(sfera_obj2, GLU_TRUE);
     glTranslatef(0,0,0);
-    gluSphere(sfera_obj2, 20, 10, 10);
+    gluSphere(sfera_obj2, 20, 5, 5);
     glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_TEXTURE_2D);
     glEnable(GL_COLOR_MATERIAL);
