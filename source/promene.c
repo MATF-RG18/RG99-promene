@@ -3,6 +3,7 @@
 #include "../header/osvetljenje.h"
 #include "../header/kamera.h"
 #include "../header/display.h"
+#include "../header/SOIL.h"
 
 
 int main(int argc, char **argv)

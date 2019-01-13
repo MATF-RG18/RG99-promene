@@ -1,7 +1,11 @@
 #include "../header/moji_objekti.h"
 #include "../header/osvetljenje.h"
 #include "../header/display.h"
+#include "../header/SOIL.h"
 #include <stdio.h>
+
+#define DESETICA 20
+
 double translacija_x = -2.0;
 int indikator_kamera = 0;
 int ind=1;
@@ -11,6 +15,8 @@ double y_k_levo1 = 2, z_k_levo1 = 2.2, z_k_iza = 2.2, x_k_iza=2, x_k_ispred = -2
 float radijus = 2;
 float prozirnost = 1;
 int indikator_prozirnost = 0; 
+
+
 void my_obj()
 {    
     glPushMatrix();
@@ -103,6 +109,82 @@ void my_obj()
     glutSolidCube(5);
     glPopMatrix();
     
+//     glPushMatrix();
+//     glBindTexture(GL_TEXTURE_2D, names[0]);
+//     glBegin(GL_POLYGON);
+//         glNormal3f(0, 0, 1);
+//         glTexCoord2f(1, 0);
+//         glVertex3f(-DESETICA*10, -DESETICA*10, -40);    
+//                 
+//         glTexCoord2f(0, 0);
+//         glVertex3f(DESETICA*10, -DESETICA*10, -40);
+//                 
+//         glTexCoord2f(0, 1); 
+//         glVertex3f(DESETICA*10, DESETICA*10, -40);
+//                     
+//         glTexCoord2f(1, 1);
+//         glVertex3f(-DESETICA*10, DESETICA*10, -40);
+//     glEnd();
+//     glBindTexture(GL_TEXTURE_2D, 0);    
+//     glPopMatrix();
+    
+//     glPushMatrix();
+//     
+//     glBindTexture(GL_TEXTURE_2D, names[1]);
+//     glBegin(GL_POLYGON);
+//         glNormal3f(1, 0, 0);
+//         glTexCoord2f(1, 0);
+//         glVertex3f(-DESETICA*10, -DESETICA*10, -40);    
+//                 
+//         glTexCoord2f(0, 0);
+//         glVertex3f(-DESETICA*10, DESETICA*10, -40);
+//                 
+//         glTexCoord2f(0, 1); 
+//         glVertex3f(-DESETICA*10, DESETICA*10, -40+DESETICA*10);
+//                     
+//         glTexCoord2f(1, 1);
+//         glVertex3f(-DESETICA*10, -DESETICA*10, -40+DESETICA*10);
+//     glEnd();
+//     glBindTexture(GL_TEXTURE_2D, 0);
+//     glPopMatrix();
+//     
+//     glPushMatrix();
+//     glBindTexture(GL_TEXTURE_2D, names[1]);
+//     glBegin(GL_POLYGON);
+//         glNormal3f(1, 0, 0);
+//         glTexCoord2f(1, 0);
+//         glVertex3f(DESETICA*10, -DESETICA*10, -40);    
+//                 
+//         glTexCoord2f(0, 0);
+//         glVertex3f(-DESETICA*10, -DESETICA*10, -40);
+//                 
+//         glTexCoord2f(0, 1); 
+//         glVertex3f(-DESETICA*10, -DESETICA*10, -40+DESETICA*10);
+//                     
+//         glTexCoord2f(1, 1);
+//         glVertex3f(DESETICA*10, -DESETICA*10, -40+DESETICA*10);
+//     glEnd();
+//     glBindTexture(GL_TEXTURE_2D, 0);
+//     glPopMatrix();
+    
+    glPushMatrix();
+    
+    glDisable(GL_COLOR_MATERIAL);
+    tekstura_sfere2 = SOIL_load_OGL_texture(TEKSTURA_SFERE2,
+    SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, tekstura_sfere2);
+        
+    GLUquadricObj* sfera_obj2 = gluNewQuadric();
+    gluQuadricTexture(sfera_obj2, GLU_TRUE);
+    glTranslatef(0,0,0);
+    gluSphere(sfera_obj2, 20, 10, 10);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glDisable(GL_TEXTURE_2D);
+    glEnable(GL_COLOR_MATERIAL);
+    
+    glPopMatrix();
+            
 }
 
 void delete_cone()
@@ -395,11 +477,27 @@ void draw_square()
         init();
         //MIN_THETA_CIRCLE = 0;
         
+       
         glPushMatrix();
         glDisable(GL_COLOR_MATERIAL);
+        tekstura_sfere = SOIL_load_OGL_texture(TEKSTURA_SFERE,
+    SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, tekstura_sfere);
+        
+        GLUquadricObj* sfera_obj = gluNewQuadric();
+        gluQuadricTexture(sfera_obj, GLU_TRUE);
         glTranslatef(0,0,4.2);
-        set_material(1);
-        glutSolidSphere(radijus, 100,100);
+        //set_material(1);
+        gluSphere(sfera_obj, radijus, 100, 100);
+        
+        
+        //glutSolidSphere(radijus, 100,100);
+        
+       
+        
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glDisable(GL_TEXTURE_2D);
         glEnable(GL_COLOR_MATERIAL);
         glPopMatrix();
         

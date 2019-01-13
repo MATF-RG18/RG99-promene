@@ -6,6 +6,7 @@
 #include "osvetljenje.h"
 #include "moji_objekti.h"
 #include "koor_sistem.h"
+#include "image.h"
 
 extern float move_camera_circle;
 extern double translacija_x;
@@ -28,4 +29,5 @@ void on_keyboard(unsigned char, int, int);
 void on_display(void);
 void on_timer(int);
 void init_main(int*, char**);
+void uvedi_teksture();
 
