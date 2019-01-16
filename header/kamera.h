@@ -54,4 +54,4 @@ void zoom_out(void);
 void camera_init(void);
 
 
-#endif
+#endif //KAMERA_H

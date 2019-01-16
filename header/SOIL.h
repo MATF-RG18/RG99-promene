@@ -1,3 +1,6 @@
+#ifndef SOIL_H_
+#define SOIL_H_
+
 /**
 	@mainpage SOIL
 
@@ -431,3 +434,5 @@ const char*
 #endif
 
 #endif /* HEADER_SIMPLE_OPENGL_IMAGE_LIBRARY	*/
+
+#endif 

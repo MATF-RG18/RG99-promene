@@ -1,3 +1,6 @@
+#ifndef MOJI_OBJEKTI_H_
+#define MOJI_OBJEKTI_H_
+
 #include "kamera.h"
 #include "SOIL.h"
 //#include "koor_sistem.h"
@@ -7,14 +10,12 @@
 #include <GL/glut.h>
 #include <math.h>
 
-
 #define TEKSTURA_SFERE "teksture/as.png"
 #define TEKSTURA_SFERE2 "teksture/ra.png"
 #define FILENAME0 "teksture/se.bmp"
 #define FILENAME1 "teksture/blusky.bmp"
 #define FILENAME2 "teksture/blusky.bmp"
 #define TEKSTURA_KOCKE "teksture/1.png"
-
 
 extern int indikator_kvadrat;
 extern int brojac;
@@ -34,6 +35,7 @@ GLuint tekstura_sfere;
 GLuint tekstura_sfere2;
 GLuint tekstura_kocke;
 GLuint names[5];
+GLUquadricObj* sfera_obj;
 GLUquadricObj* sfera_obj2;
 
 void my_obj();
@@ -44,3 +46,6 @@ void draw_square();
 void piramida(float);
 void kocke(float);
 void init_teksture();
+
+
+#endif // MOJI_OBJEKTI_H_

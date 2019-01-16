@@ -1,3 +1,6 @@
+#ifndef OSVETLJENJE_H
+#define OSVETLJENJE_H
+
 //#include "kamera.h"
 #include "moji_objekti.h"
 //#include "koor_sistem.h"
@@ -8,3 +11,5 @@ extern float prozirnost;
 
 void init_lights(void);
 void set_material(int);
+
+#endif

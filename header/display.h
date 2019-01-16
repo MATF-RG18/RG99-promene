@@ -1,3 +1,6 @@
+#ifndef DISPLAY_H_
+#define DISPLAY_H_
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <GL/glut.h>
@@ -35,3 +38,4 @@ void init_main(int*, char**);
 void uvedi_teksture();
 void draw_name();
 
+#endif //DISPLAY_H_

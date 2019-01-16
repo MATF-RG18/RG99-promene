@@ -16,12 +16,18 @@ float radijus = 1;
 float prozirnost = 1;
 int indikator_prozirnost = 0; 
 
-// void init_teksture(){
-//     tekstura_sfere2 = SOIL_load_OGL_texture(TEKSTURA_SFERE2,
-//     SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
-//     GLUquadricObj* sfera_obj2 = gluNewQuadric();
-//     gluQuadricTexture(sfera_obj2, GLU_TRUE);
-// }
+void init_teksture() {
+    sfera_obj = gluNewQuadric();
+    tekstura_sfere = SOIL_load_OGL_texture(TEKSTURA_SFERE,
+    SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
+    
+    sfera_obj2 = gluNewQuadric();
+    tekstura_sfere2 = SOIL_load_OGL_texture(TEKSTURA_SFERE2,
+    SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
+    
+    tekstura_kocke = SOIL_load_OGL_texture(TEKSTURA_KOCKE,
+    SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
+}
 
 void my_obj()
 {   
@@ -199,29 +205,23 @@ void my_obj()
     glPushMatrix();
     
     glDisable(GL_COLOR_MATERIAL);
-    tekstura_sfere2 = SOIL_load_OGL_texture(TEKSTURA_SFERE2,
-    SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
-    //init_teksture();
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, tekstura_sfere2);
         
-    GLUquadricObj* sfera_obj2 = gluNewQuadric();
     gluQuadricTexture(sfera_obj2, GLU_TRUE);
     glTranslatef(0,0,0);
-    gluSphere(sfera_obj2, 20, 10, 10);
+    gluSphere(sfera_obj2, 20, 50, 50);
     glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_TEXTURE_2D);
     glEnable(GL_COLOR_MATERIAL);
     
-    glPopMatrix();       
+    glPopMatrix();               
 }
 
 void kocke(float transliraj){
     /*Iscrtavanje kocke*/
     glPushMatrix();
     glTranslatef(0, 0, transliraj);
-    tekstura_kocke = SOIL_load_OGL_texture(TEKSTURA_KOCKE,
-    SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
     glBindTexture(GL_TEXTURE_2D, tekstura_kocke);
     /*iscrtavanje kocke i teksturiranje strana po strana*/
     glBegin(GL_POLYGON);
@@ -319,8 +319,6 @@ void piramida(float transliraj){
      *Sa vrha piramide ce se pokrenuti sfera na transformacije. */
     glPushMatrix();
     glTranslatef(0,0,transliraj+5);
-    tekstura_kocke = SOIL_load_OGL_texture(TEKSTURA_KOCKE,
-    SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
     glBindTexture(GL_TEXTURE_2D, tekstura_kocke);
     glBegin(GL_TRIANGLES);          
         glNormal3f(1, 0, 0);
@@ -665,12 +663,9 @@ void draw_square()
         /*Sfera koja je upisana u kocku. */
         glPushMatrix();
         glDisable(GL_COLOR_MATERIAL);
-        tekstura_sfere = SOIL_load_OGL_texture(TEKSTURA_SFERE,
-        SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, tekstura_sfere);
         
-        GLUquadricObj* sfera_obj = gluNewQuadric();
         gluQuadricTexture(sfera_obj, GLU_TRUE);
         glTranslatef(0,0,4.2);
         gluSphere(sfera_obj, radijus, 100, 100);        
@@ -681,6 +676,7 @@ void draw_square()
         glPopMatrix();
         
         /*Kocka cija se prozirnost povecava i otkriva sferu. */
+        //if (brojac < 40000){
         glPushMatrix();
         glDisable(GL_COLOR_MATERIAL);
         set_material(0);
@@ -688,5 +684,7 @@ void draw_square()
         glutSolidCube(4);
         glEnable(GL_COLOR_MATERIAL);
         glPopMatrix();
+        //}
+        
     }  
 }

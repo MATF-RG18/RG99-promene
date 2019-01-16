@@ -38,18 +38,18 @@ void on_keyboard(unsigned char key, int x, int y)
             glutTimerFunc(50, on_timer, 0);
         }
         break;
-    case 'S':
+    /*case 'S':
     case 's':
-        /* Kamera se gleda dole */
+        /* Kamera gleda dole 
         look_down();
         glutPostRedisplay();
         break;    
     case 'W':
     case 'w':
-        /* Kamera se pomera gore */
+        /* Kamera pomera gore 
         look_up();
         glutPostRedisplay();
-        break;
+        break;*/
     case 'Q':
     case 'q':
         /* Kamera se priblizava ka koordinatnom pocetku */
@@ -101,10 +101,10 @@ void on_display(void)
     /*inicijalizacija Glut, GL, osvetljenje*/
     init();
     init_lights();
-    draw_name();
+    
     my_obj();
     //coord_sys();   
-   
+    draw_name();
     glutSwapBuffers();
 }
 
@@ -131,9 +131,7 @@ void on_timer(int value)
         prozirnost -= 0.004;
     }
         
-        
-    /* Po potrebi se ponovo postavlja tajmer. */
-    
+    /* Zaustavljanje brojaca */
     if (brojac % 1000 == 0 && brojac<=4000) {
         timer_active = 0;
     }
@@ -178,7 +176,7 @@ void init_main(int* argc, char** argv)
     /* Ukljucujemo normalizaciju vektora normala */
     glEnable(GL_NORMALIZE);
     uvedi_teksture();
-    //init_teksture();
+    init_teksture();
     
     //glEnable(GL_LINE_SMOOTH);
 }
