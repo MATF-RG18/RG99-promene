@@ -30,8 +30,8 @@ sudo apt-get install libsoil-dev
  U poslednjem koraku, nakon što se povećava vidljivost sfere upisane u kocku, <br />
  korisnik ima mogućnost uvećavanja i smanjivanja veličine sfere komandama: <br />
 
- <kbd>G</kbd> - uvećavanje radijusa sfere <br />
- <kbd>G</kbd> - smanjivanje radijusa sfere <br />
+ <kbd>M</kbd> - uvećavanje radijusa sfere <br />
+ <kbd>N</kbd> - smanjivanje radijusa sfere <br />
  
 # Promena pozicije kamere:
  
