@@ -1,5 +1,6 @@
 #include "../header/osvetljenje.h"
 
+/*Postavljanje inicijalnog osvetljenja i pozicije svetla*/
 void init_lights()
 {
     GLfloat light_position[] = {  1, 15, 5, 0 };
@@ -15,6 +16,7 @@ void init_lights()
     glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
 }
 
+/*Postavljamo materijale koji su korisceni za postavljanje na objekte*/
 void set_material(int id)
 {
     GLfloat ambient_coeffs[] = { 0.7, 0.7, 0.7, 1 };

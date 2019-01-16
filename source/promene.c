@@ -8,8 +8,9 @@
 
 int main(int argc, char **argv)
 {
-   
+   /*Poziv inicijalizacije i funkcija za iscrtavanje*/
     init_main(&argc, argv);
+    /*Ulazak u glavnu petlju*/
     glutMainLoop();
     return 0;
 }

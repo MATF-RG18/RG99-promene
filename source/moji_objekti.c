@@ -16,31 +16,33 @@ float radijus = 1;
 float prozirnost = 1;
 int indikator_prozirnost = 0; 
 
-
 void my_obj()
-{    
+{   
+    /*Translacija sfere do koordinatnog pocetka
+     * Ovime je predstavljeno kretanje jedne tacke u 2D prostoru */
     glPushMatrix();
     glColor3f(1.0,0.87541,0.0);
     glTranslatef(0,0,-2.2);
+    /*U programu se dogadjaji desavaju u funkciji od brojaca*/
     if (brojac <= 2000) {
         float koef = brojac < 1000 ? brojac / 1000.0f : 1.0f;
         glTranslatef(0, 0, 2.2 * koef);
         glutSolidSphere(0.05, 100, 100);
-
     }
     glPopMatrix();
     
+    /*Tacka se "udaja" i druga tacka se udaljava od prve, ali one ostaju povezane
+     jer nesto sto je jednom bilo povezano ostaje povezano zauvek, te one formiraju
+     duz izmedju njih*/
     glPushMatrix();
     if (brojac > 1000 && brojac <= 2000) {
-        
+        /*Niz kojim se kontrolise i iscrtava druga sfera u zavisnosti od njenog trenutnog polozaja*/
         float tacka[3];
-        
         if (brojac < 2000) {
             float koef = (brojac - 1000) / 1000.0f;
             tacka[0] = 2 * koef;            
             tacka[1] = 0;
             tacka[2] = 2.2 * koef;
-
             glTranslatef(2 * koef, 0, 2.2 * koef);
         } else {
             tacka[0] = 2;            
@@ -48,45 +50,51 @@ void my_obj()
             tacka[2] = 2.2;
             glTranslatef(2, 0, 2.2);
         }
-        
         glutSolidSphere(0.05, 100, 100);
         
+        /* Primeceno je da glLineWidth() ne radi na svim sistemima
         glLineWidth(10);
-        //int lajnvidth=-1;
-        //glGetIntegerv(GL_LINE_WIDTH, &lajnvidth);
-        //printf("%d\n", lajnvidth);
+        int lajnvidth=-1;
+        glGetIntegerv(GL_LINE_WIDTH, &lajnvidth);
+        printf("%d\n", lajnvidth);*/
+        
+        /*Iscrtavanje duzi koja povezuje dve malopredjasnje povezane tacke*/
         glBegin(GL_LINES);
             glVertex3f(0, 0, 0);
             glVertex3f(-tacka[0], -tacka[1], -tacka[2]);
-            
         glEnd();
     }
     glPopMatrix();
     
-    if (brojac == 4000)
-            animation_clip_cone = 0.001;
+    /*Sledeci deo koda pokrece iscrtavanje kupe i nakon iscrtavanja uklanja kupu
+     detaljan opis funkcije je u samoj funkciji*/
+    if (brojac == 4000){
+        /*Parametar se uvecava ukoliko je razlicit od nule, sto ovde postavljamo*/
+        animation_clip_cone = 0.001;
+    }
     if (brojac > 2000)
         delete_cone();
  
-    if (brojac > 6000 && brojac<8000)
-    {
+    /*Menja se polozaj kamere radi vizuelnog efekta da bi se video prvo ceo krug,
+     a zatim se bira ugao tako da se od kruga samo jedna duz*/
+    if (brojac > 6000 && brojac<8000){
        look_up();
     }
-    if (brojac > 8000)
-    {
-        move_camera_circle=1;
+    if (brojac > 8000){
         look_down();
     }
     
+    /*Sledeci deo koda iscrtava duzi koje se spajaju u kvadrat,
+     a zatim se dobijeni kvadrat pretvara u kocku, dobija jednu dimenziju vise,
+     rotacijom pocetnog kvadrata oko svake od njegovih ivica
+     Detaljnije objasnjenje sledi u funkciji draw_square() */
     if (brojac > 9300){
         draw_lines();
     }
-    
     draw_square();
     
-    /* kocke koje su kasnije iscrtavane pomocu glBegin, glEnd 
-      da bi se primenila tekstura na njih. 
-      
+    /* Sledece kocke su kostur za iscrtavanje kvadrata nad kojim se transformacije 
+     * oblika desavaju. 
     glPushMatrix();
     glColor3f(0.85, 0.85, 0.1);
     glutWireCube(1);
@@ -172,10 +180,15 @@ void my_obj()
     glBindTexture(GL_TEXTURE_2D, 0);
     glPopMatrix();*/
     
+    /*Iscrtavanje kocki*/
+//     glEnable(GL_TEXTURE_2D);
+//     kocke(-10.5);
+//     piramida(-10.5); 
+//     glDisable(GL_TEXTURE_2D);
     
-    kocke();
-    /* Iscrtavanje pozadine */
-    glPushMatrix();
+    /* Iscrtavanje pozadine
+     Teksturirana je sfera i cela scena se nalazi unutar jedne sfere. */
+  /*  glPushMatrix();
     
     glDisable(GL_COLOR_MATERIAL);
     tekstura_sfere2 = SOIL_load_OGL_texture(TEKSTURA_SFERE2,
@@ -191,24 +204,18 @@ void my_obj()
     glDisable(GL_TEXTURE_2D);
     glEnable(GL_COLOR_MATERIAL);
     
-    glPopMatrix();
-    
-    //piramida();
-    
-            
+    glPopMatrix(); */   
+              
 }
 
-void kocke(){
-    //iscrtavanje prve kocke
-    
+void kocke(float transliraj){
+    /*Iscrtavanje kocke*/
     glPushMatrix();
-    //glTranslatef(0, 0, -10.5)
-    //glColor3f(0.8, 0.8, 0.8);
-    //glBindTexture(GL_TEXTURE_2D, names[2]);
+    glTranslatef(0, 0, transliraj);
     tekstura_kocke = SOIL_load_OGL_texture(TEKSTURA_KOCKE,
     SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
     glBindTexture(GL_TEXTURE_2D, tekstura_kocke);
-    
+    /*iscrtavanje kocke i teksturiranje strana po strana*/
     glBegin(GL_POLYGON);
         glNormal3f(1, 0, 0);
         glTexCoord2f(1, 0);
@@ -223,67 +230,155 @@ void kocke(){
         glTexCoord2f(1, 1);
         glVertex3f(2.5, -2.5, 5);
     glEnd();
+    glBegin(GL_POLYGON);
+        glNormal3f(1, 0, 0);
+        glTexCoord2f(1, 0);
+        glVertex3f(-2.5, -2.5, 0);    
+                
+        glTexCoord2f(0, 0);
+        glVertex3f(-2.5, 2.5, 0);
+                
+        glTexCoord2f(0, 1); 
+        glVertex3f(-2.5, 2.5, 5);
+                    
+        glTexCoord2f(1, 1);
+        glVertex3f(-2.5, -2.5, 5);
+    glEnd();
+    glBegin(GL_POLYGON);
+        glNormal3f(0, 1, 0);
+        glTexCoord2f(1, 0);
+        glVertex3f(-2.5, 2.5, 0);    
+                
+        glTexCoord2f(0, 0);
+        glVertex3f(2.5, 2.5, 0);
+                
+        glTexCoord2f(0, 1); 
+        glVertex3f(2.5, 2.5, 5);
+                    
+        glTexCoord2f(1, 1);
+        glVertex3f(-2.5, 2.5, 5);
+    glEnd();
+    glBegin(GL_POLYGON);
+        glNormal3f(0, 1, 0);
+        glTexCoord2f(1, 0);
+        glVertex3f(-2.5, -2.5, 0);    
+                
+        glTexCoord2f(0, 0);
+        glVertex3f(2.5, -2.5, 0);
+                
+        glTexCoord2f(0, 1); 
+        glVertex3f(2.5, -2.5, 5);
+                    
+        glTexCoord2f(1, 1);
+        glVertex3f(-2.5, -2.5, 5);
+    glEnd();
+    /*gornja strana kocke*/
+    glBegin(GL_POLYGON);
+        glNormal3f(0, 0, 1);
+        glTexCoord2f(1, 0);
+        glVertex3f(-2.5, -2.5, 5);    
+                
+        glTexCoord2f(0, 0);
+        glVertex3f(-2.5, 2.5, 5);
+                
+        glTexCoord2f(0, 1); 
+        glVertex3f(2.5, 2.5, 5);
+                    
+        glTexCoord2f(1, 1);
+        glVertex3f(2.5, -2.5, 5);
+    glEnd();
+    /*donja strana kocke*/
+    glBegin(GL_POLYGON);
+        glNormal3f(0, 0, 1);
+        glTexCoord2f(1, 0);
+        glVertex3f(-2.5, -2.5, 0);    
+                
+        glTexCoord2f(0, 0);
+        glVertex3f(-2.5, 2.5, 0);
+                
+        glTexCoord2f(0, 1); 
+        glVertex3f(2.5, 2.5, 0);
+                    
+        glTexCoord2f(1, 1);
+        glVertex3f(2.5, -2.5, 0);
+    glEnd();
     glBindTexture(GL_TEXTURE_2D, 0);   
     glPopMatrix();
-    
-    
-    
 }
 
-void piramida(){
-    
+void piramida(float transliraj){
+    /*Iscrtava se piramida koja stoji na kocki. 
+     *Sa vrha piramide ce se pokrenuti sfera na transformacije. */
     glPushMatrix();
+    glTranslatef(0,0,transliraj+5);
+    tekstura_kocke = SOIL_load_OGL_texture(TEKSTURA_KOCKE,
+    SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
+    glBindTexture(GL_TEXTURE_2D, tekstura_kocke);
     glBegin(GL_TRIANGLES);          
-      // Front
+        glNormal3f(1, 0, 0);
+        glTexCoord2f(0, 0);
+        glVertex3f(1.5, -1.5, 0);
         
-      glColor3f(1.0f, 0.0f, 0.0f);     // Red
-      glVertex3f( 0.0f, 1.0f, 0.0f);
-      glColor3f(0.0f, 1.0f, 0.0f);     // Green
-      glVertex3f(-1.0f, -1.0f, 1.0f);
-      glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-      glVertex3f(1.0f, -1.0f, 1.0f);
- 
-      // Right
-      glColor3f(1.0f, 0.0f, 0.0f);     // Red
-      glVertex3f(0.0f, 1.0f, 0.0f);
-      glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-      glVertex3f(1.0f, -1.0f, 1.0f);
-      glColor3f(0.0f, 1.0f, 0.0f);     // Green
-      glVertex3f(1.0f, -1.0f, -1.0f);
- 
-      // Back
-      glColor3f(1.0f, 0.0f, 0.0f);     // Red
-      glVertex3f(0.0f, 1.0f, 0.0f);
-      glColor3f(0.0f, 1.0f, 0.0f);     // Green
-      glVertex3f(1.0f, -1.0f, -1.0f);
-      glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-      glVertex3f(-1.0f, -1.0f, -1.0f);
- 
-      // Left
-      glColor3f(1.0f,0.0f,0.0f);       // Red
-      glVertex3f( 0.0f, 1.0f, 0.0f);
-      glColor3f(0.0f,0.0f,1.0f);       // Blue
-      glVertex3f(-1.0f,-1.0f,-1.0f);
-      glColor3f(0.0f,1.0f,0.0f);       // Green
-      glVertex3f(-1.0f,-1.0f, 1.0f);
-   glEnd();   // Done drawing the pyramid
+        glTexCoord2f(1, 0);
+        glVertex3f(1.5, 1.5, 0);
+        
+        glTexCoord2f(0, 1); 
+        glVertex3f(0, 0, 3.25);
+    glEnd();
+    glBegin(GL_TRIANGLES);          
+        glNormal3f(1, 0, 0);
+        glTexCoord2f(0, 0);
+        glVertex3f(-1.5, -1.5, 0);
+        
+        glTexCoord2f(1, 0);
+        glVertex3f(-1.5, 1.5, 0);
+        
+        glTexCoord2f(0, 1); 
+        glVertex3f(0, 0, 3.25);
+    glEnd();
+    glBegin(GL_TRIANGLES);          
+        glNormal3f(0, -1, 0);
+        glTexCoord2f(0, 0);
+        glVertex3f(-1.5, -1.5, 0);
+        
+        glTexCoord2f(1, 0);
+        glVertex3f(1.5, -1.5, 0);
+        
+        glTexCoord2f(0, 1); 
+        glVertex3f(0, 0, 3.25);
+   glEnd();
+   glBegin(GL_TRIANGLES);          
+        glNormal3f(0, 1, 0);
+        glTexCoord2f(0, 0);
+        glVertex3f(-1.5, 1.5, 0);
+        
+        glTexCoord2f(1, 0);
+        glVertex3f(1.5, 1.5, 0);
+        
+        glTexCoord2f(0, 1); 
+        glVertex3f(0, 0, 3.25);
+   glEnd();
    glPopMatrix();
 }
 
+/*Sledeca funkcija iscrtava kupu, 
+ *a zatim uklanja omotac kupe pomocu kliping ravni */
 void delete_cone()
 {
-    
+    /*Definisemo koju kliping ravan zelimo da koristimo. */
     double clipPlane[] = { 0, 0, 1, -animation_clip_cone};
-    //printf("%f\n", -animation_clip_cone);
     glClipPlane(GL_CLIP_PLANE0, clipPlane);
   
+    /*U zavisnosti od stanja brojaca iscrtava se kupa.
+     Ideja je da se duz dobijena u prethodnom koraku iscrtavanja rotira oko z ose 
+     sa fiksiranim donjim temenom u koordinatnom pocetku i da tom rotacijom nastaje kupa. 
+     Baza kupe se naknadno dodaje, nakon sto je omotac kupe iscrtan. */
     if (brojac > 2000) {
         glPushMatrix();
-        glEnable(GL_CLIP_PLANE0);
-        if (start_cone == 0)
-             start_cone = 1;
-       // start_cone = animation_clip_cone == 0 ? 1 ;
-        //printf("%d\n", start_cone);
+        glEnable(GL_CLIP_PLANE0);        
+        /*Iscrtavanje kupe je zasnovano na principu iscrtavanja medjusobno povezanih trouglova.
+         To su tacke: koordinatni pocetak (polozaj prve sfere), trenutna tacka polozaja druge sfere i 
+         tacka polozaja druge sfere nakon njene rotacije oko z ose. */
         glTranslatef(0, 0, 2.2);
         float koef = brojac < 3000 ? (brojac - 2000) / 1000.0f : 1.05;
         glBegin(GL_TRIANGLE_FAN);
@@ -294,11 +389,11 @@ void delete_cone()
                 float y = 2 * sinf(i * 2 * M_PI);
                 glNormal3f(x,y,0);
                 glVertex3f(x, y, 0);
-                
             }
         glEnd();
         glDisable(GL_CLIP_PLANE0);
         
+        /*Iscrtavanje baze kupe koje se krece u istom smeru kao i formiranje omotaca kupe. */
         if (brojac > 3000 && brojac<10000) {
             glBegin(GL_TRIANGLE_FAN);
                 glNormal3f(0, 0, 1);
@@ -308,74 +403,75 @@ void delete_cone()
                     float y = 2 * sinf(i * 2 * M_PI);
                     glNormal3f(0, 0, 1);
                     glVertex3f(x, y, 0);
-                    
                 }
             glEnd();
-        
         }
-        
         glPopMatrix(); 
-        
     }    
 }
 
 void draw_lines()
 {
+    /*Iscrtavanje linija koje formiraju kvadrat. 
+     Kada se kvadrat iscrta, on se popuni odgovarajucom bojom. */
     glPushMatrix();
     
-        if (brojac<21900){
+    if (brojac<21900){
         float tacka1[3], tacka2[3];
         if (brojac < 12000){
-        if (brojac < 11000) {
-            float koef = (brojac - 10000) / 1000.0f;
-            //printf("%f\n", koef);
-            tacka1[0] = 2 * koef;            
-            tacka1[1] = -2 * koef;
-            tacka1[2] = 2.2;
-            tacka2[0] = -2 * koef;            
-            tacka2[1] = 2 * koef;
-            tacka2[2] = 2.2;
-
-            //glTranslatef(2 * koef, -2*koef, 2.2);
-        } else {
-            tacka1[0] = 2;            
-            tacka1[1] = -2;
-            tacka1[2] = 2.2;
-            tacka2[0] = -2;            
-            tacka2[1] = 2;
-            tacka2[2] = 2.2;
-            //glTranslatef(2, -2, 2.2);
-        }
-    glBegin(GL_LINES);
-        glVertex3f(0, 0, 2.2);
-        glVertex3f(tacka1[0], tacka1[1], tacka1[2]);
-    glEnd();
-    glBegin(GL_LINES);
-        glVertex3f(0, 0, 2.2);
-        glVertex3f(tacka2[0], tacka2[1], tacka2[2]);
-    glEnd();
-        }
-    
-    else{
-        indikator_kamera = 1; 
+            /*Linija koju smo videli nakon rotacije kamere po uglu theta, 
+             zamenjuje se duzom linijom koja predstavlja stranicu kvadrata. */
+            if (brojac < 11000) {
+                float koef = (brojac - 10000) / 1000.0f;
+                tacka1[0] = 2 * koef;            
+                tacka1[1] = -2 * koef;
+                tacka1[2] = 2.2;
+                tacka2[0] = -2 * koef;            
+                tacka2[1] = 2 * koef;
+                tacka2[2] = 2.2;
+            } 
+            else {
+                tacka1[0] = 2;            
+                tacka1[1] = -2;
+                tacka1[2] = 2.2;
+                tacka2[0] = -2;            
+                tacka2[1] = 2;
+                tacka2[2] = 2.2;
+            }
+        /*Iscrtavanje stranice, od sredine ka krajevima duzi. */   
         glBegin(GL_LINES);
-            glVertex3f(2, -2, 2.2);
-            glVertex3f(translacija_x, 2, 2.2);
+            glVertex3f(0, 0, 2.2);
+            glVertex3f(tacka1[0], tacka1[1], tacka1[2]);
         glEnd();
-    }
+        glBegin(GL_LINES);
+            glVertex3f(0, 0, 2.2);
+            glVertex3f(tacka2[0], tacka2[1], tacka2[2]);
+        glEnd();
         }
+        else{
+        /*Rotira se kamera dok ne dodje do pozicije gde je y koordinata jednaka nuli, jer 
+         zelimo da posmatramo dogadjaj iz druge pozicije. */
+            indikator_kamera = 1;
+            /*Nakon iscrtane duzi iz dva dela, zamenjujemo je jednom duzi, koja predstavlja stranicu kvadrata. */
+            glBegin(GL_LINES);
+                glVertex3f(2, -2, 2.2);
+                glVertex3f(translacija_x, 2, 2.2);
+            glEnd();
+        }
+    }
     glPopMatrix();    
 }
 
 void draw_square()
 {
-    //printf("indikator_kvadrat: %d\n", indikator_kvadrat);
+    /*Iscrtavanje kocke 
+     */
     if (brojac < 32000){
     if (indikator_kvadrat==1 && brojac<22000){
-        //printf("square f: %f\n", kamera.theta);
-       // if (kamera.theta <= MAX_THETA)
         if (ind==1)
         {
+        /*Pocev od temena iscrtane linije, iscrtavaju se u isto vreme druge dve stranice kvadrata 
+         *koje su paralelne jedna drugoj*/ 
             indikator_kamera = 2;
             glBegin(GL_LINES);
                 glVertex3f(2,2,2.2);
@@ -400,6 +496,10 @@ void draw_square()
         }
         if (ind==0)
         {
+            /*Dodavanje poslednje stranice kvadrata, od leve ka desnoj ivici. 
+             Kameru fiksiramo na odredjenoj visini, ukoliko je ind=0, jer nam 
+             on ukazuje da je kamera stigla do svog odredjenog theta. 
+             Indikator kamere postavljamo na nulu jer zelimo da kamera moze da se krece.*/
             indikator_kamera=0;
             kamera.theta = nova_kamera;
             glBegin(GL_LINES);
@@ -410,7 +510,7 @@ void draw_square()
                 }
                 else
                     glVertex3f(-2,2,2.2);
-             glVertex3f(2,-2,2.2);
+                glVertex3f(2,-2,2.2);
                 if (x>=-2){
                     glVertex3f(x,-2,2.2);
                     x -= 0.02;
@@ -425,42 +525,38 @@ void draw_square()
                     }
                     else{
                         glVertex3f(-2,2,2.2);
+                        /*Indikator kamere kojim se kamera pocinje udaljavati od koordinatnog pocetka. */
                         indikator_kvadrat=2;
-                        //printf("brojac: %d\n", brojac);
-                        //printf("indikator_kvadrat: %d\n", indikator_kvadrat);
-                        
                     }
                 }
-                
             glEnd();
         }        
     }
     else if (indikator_kvadrat == 2){
-        /* Iscrtavanje kvadrata koji je baza kocke koja dalje treba da nastane */
+        /* Iscrtavanje kvadrata koji je baza kocke. */
         indikator_kamera = 0;
         kamera.theta = nova_kamera;
-        //printf("indikator_kvadrat: %d\n", indikator_kvadrat);
         glPushMatrix();
         
         if (brojac > 24000 && brojac < 32000){
             zoom_out();
-            //glRotatef(90,0,0,1);
         }
-//         glTranslatef(0,2,0);
-//         glRotatef(90.0,0,1.0,0);
-//         glTranslatef(0,-2,0);
+
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glBegin(GL_POLYGON);
-        glColor3f(0.1,0.2,0.6);
+        glColor3f(0.1,0.2,0.8);
             glVertex3f(2,2,2.2);
             glVertex3f(-2,2,2.2);
             glVertex3f(-2,-2,2.2);
             glVertex3f(2,-2,2.2);
         glEnd();
         
+        /*Kvadrati koji se inicijalno nalaze na bazi kocke, podizu se sa cetiri 
+         *razlicite strane i formiraju kocku. */
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        /* Desna strana u odnosu na polozaj kamere. */
         glBegin(GL_POLYGON);
-            glColor3f(0.1,0.2,0.4);
+            glColor3f(0.1,0.2,0.8);
             
             if (z_k1<=6.2){
                 glVertex3f(-2,y_k1,z_k1);
@@ -469,7 +565,6 @@ void draw_square()
             }
             else
                 glVertex3f(-2,2,6.2);
-            
             
             if (z_k2<=6.2){
                 glVertex3f(2,y_k2,z_k2);
@@ -483,8 +578,9 @@ void draw_square()
         glEnd();
         
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        /* Leva strana u odnosu na polozaj kamere. */
         glBegin(GL_POLYGON);
-            glColor3f(0.1,0.2,0.4);
+            glColor3f(1,0.6,0.7);
             
             glVertex3f(-2,-2,2.2);
             glVertex3f(2,-2,2.2);
@@ -496,13 +592,13 @@ void draw_square()
             else{
                 glVertex3f(2,-2,6.2);
                 glVertex3f(-2,-2,6.2);
-                //printf("brojac: %d\n", brojac);
             }
         glEnd();
-        //if (brojac > 32000){
+
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        /* Zadnja strana u odnosu na polozaj kamere. */
         glBegin(GL_POLYGON);
-            glColor3f(0.1,0.2,0.8);
+            glColor3f(0.1,0.9,0.8);
             glVertex3f(-2,-2,2.2);
             glVertex3f(-2,2,2.2);
             if (z_k_iza<=6.2){
@@ -517,8 +613,9 @@ void draw_square()
             
         glEnd();
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        /* Prednja strana u odnosu na polozaj kamere. */
         glBegin(GL_POLYGON);
-            glColor3f(0.1,0.4,0.8);
+            glColor3f(0.7,0.4,0.8);
             glVertex3f(2,-2,2.2);
             glVertex3f(2,2,2.2);
             if (z_k_ispred<=6.2){
@@ -533,21 +630,19 @@ void draw_square()
             }
         glEnd();
         
-        //}
         if (brojac > 32000){
+            /*Iscrtavanje gornje strane kocke. */
             glPushMatrix();
             glBegin(GL_POLYGON);
-            glColor3f(0.8,0.4,0.1);
-            glVertex3f(-2,-2,6.2);
-            glVertex3f(-2,2,6.2);
-            
-            glVertex3f(2,2,6.2);
-            glVertex3f(2,-2,6.2);
+                glColor3f(0.8,0.4,0.1);
+                glVertex3f(-2,-2,6.2);
+                glVertex3f(-2,2,6.2);
+                glVertex3f(2,2,6.2);
+                glVertex3f(2,-2,6.2);
             glEnd();
             glPopMatrix();
             indikator_kvadrat = 0;
         }
-            
         glPopMatrix();
     }
     }
@@ -556,11 +651,10 @@ void draw_square()
         indikator_prozirnost = 1;
         MIN_THETA_CIRCLE = 0;
         kamera.theta = nova_kamera;
-        //indikator_kamera = 0 ;
+        /*Inicijalizacije kamere. */
         init();
-        //MIN_THETA_CIRCLE = 0;
         
-       
+        /*Sfera koja je upisana u kocku. */
         glPushMatrix();
         glDisable(GL_COLOR_MATERIAL);
         tekstura_sfere = SOIL_load_OGL_texture(TEKSTURA_SFERE,
@@ -571,15 +665,14 @@ void draw_square()
         GLUquadricObj* sfera_obj = gluNewQuadric();
         gluQuadricTexture(sfera_obj, GLU_TRUE);
         glTranslatef(0,0,4.2);
-        //set_material(1);
         gluSphere(sfera_obj, radijus, 100, 100);        
-        //glutSolidSphere(radijus, 100,100);
-        
+       
         glBindTexture(GL_TEXTURE_2D, 0);
         glDisable(GL_TEXTURE_2D);
         glEnable(GL_COLOR_MATERIAL);
         glPopMatrix();
         
+        /*Kocka cija se prozirnost povecava i otkriva sferu. */
         glPushMatrix();
         glDisable(GL_COLOR_MATERIAL);
         set_material(0);
@@ -587,12 +680,5 @@ void draw_square()
         glutSolidCube(4);
         glEnable(GL_COLOR_MATERIAL);
         glPopMatrix();
-        
-    }
-    printf("brojac: %d\n", brojac);
-    printf("kvadrat: %d\n", indikator_kvadrat);
-    printf("kamera: %d\n", indikator_kamera);
-    
-    
-    
+    }  
 }

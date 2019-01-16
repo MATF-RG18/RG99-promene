@@ -34,11 +34,12 @@ GLuint tekstura_sfere;
 GLuint tekstura_sfere2;
 GLuint tekstura_kocke;
 GLuint names[5];
+GLUquadricObj* sfera_obj2;
 
 void my_obj();
 void delete_cone();
 void draw_eyes();
 void draw_lines();
 void draw_square();
-void piramida();
-void kocke();
+void piramida(float);
+void kocke(float);

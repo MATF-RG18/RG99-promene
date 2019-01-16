@@ -11,23 +11,27 @@ double uvecaj_theta = M_PI/60;
 
 void on_keyboard(unsigned char key, int x, int y)
 {
+    /* Funkcija on_keyboard na dogadjaj tastature poziva odgovarajucu funkciju */
+    
     switch (key) {
     case 27:
         exit(0);
         break;
     case 'A':
     case 'a':
+        /* Kamera se pomera u levo */
         look_left();
         glutPostRedisplay();
         break;
     case 'D':
     case 'd':
+        /* Kamera se pomera u desno */
         look_right();
         glutPostRedisplay();
         break;
     case 'r':
     case 'R':
-        /* Resetuju se uglovi phi i theta na pocetne vrednosti. */
+        /* Proverava se aktivnost tajmera */
         brojac = 0;
         if (!timer_active) {
             timer_active = 1;
@@ -36,21 +40,25 @@ void on_keyboard(unsigned char key, int x, int y)
         break;
     case 'S':
     case 's':
+        /* Kamera se gleda dole */
         look_down();
         glutPostRedisplay();
         break;    
     case 'W':
     case 'w':
+        /* Kamera se pomera gore */
         look_up();
         glutPostRedisplay();
         break;
     case 'Q':
     case 'q':
+        /* Kamera se priblizava ka koordinatnom pocetku */
         zoom_in();
         glutPostRedisplay();
         break;
     case 'E':
     case 'e':
+        /* Kamera se udaljava od koordinatnog pocetka */
         zoom_out();
         glutPostRedisplay();
         break;
@@ -70,11 +78,13 @@ void on_keyboard(unsigned char key, int x, int y)
         break;
     case 'M':
     case 'm':
+        /* Radijus sfere na kraju animacije se povecava */
         radijus += 0.05;
         glutPostRedisplay();
         break;
     case 'N':
     case 'n':
+        /* Radijus sfere na kraju animacije se smanjuje */
         if (radijus>=0)
             radijus -= 0.05;
         glutPostRedisplay();
@@ -86,6 +96,7 @@ void on_keyboard(unsigned char key, int x, int y)
 
 void on_display(void)
 {
+    /*inicijalizacija Glut, GL, osvetljenje*/
     init();
     init_lights();
     
@@ -103,7 +114,8 @@ void on_timer(int value)
 
     /* Azurira se vreme simulacije. */
     brojac += 50;
-    move_camera_circle += 0.1;
+    
+    /* Formiranje kocke rotacijom kvadrata */
     if (translacija_x <= 2)
         translacija_x += M_PI/200;
     else{
@@ -111,9 +123,10 @@ void on_timer(int value)
             indikator_kvadrat = 1;
     }
 
-    if (indikator_prozirnost && prozirnost>=0.7)
+    /* Povecavanje prozirnosti crvene kocke */
+    if (indikator_prozirnost && prozirnost>=0)
     {
-        prozirnost -= 0.001;
+        prozirnost -= 0.004;
     }
         
         
@@ -123,11 +136,12 @@ void on_timer(int value)
         timer_active = 0;
     }
     
-   
+   /*Kliping ravan kojom kupa nestaje*/
     if (animation_clip_cone != 0){
         animation_clip_cone += 0.05;
     }
     
+    /*Provera aktivnosti tajmera*/
     if (timer_active)
         glutTimerFunc(50, on_timer, 0);
     /* Forsira se ponovno iscrtavanje prozora. */
@@ -137,6 +151,7 @@ void on_timer(int value)
 
 void init_main(int* argc, char** argv)
 {
+    /*Glut inicijalizacija*/
     glutInit(argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
     
@@ -148,8 +163,7 @@ void init_main(int* argc, char** argv)
     glutReshapeFunc(on_reshape);
     glutDisplayFunc(on_display);
     
-    /*  glClearColor( 0.35,  0.35 , 0.67,0);
-      glClearColor(0.2,0.2,0.5,0);*/
+    /*OpenGl inicijalizacija*/
     glClearColor(0,0,0,0);
     glEnable(GL_COLOR_MATERIAL);
     camera_init();
@@ -162,6 +176,7 @@ void init_main(int* argc, char** argv)
     /* Ukljucujemo normalizaciju vektora normala */
     glEnable(GL_NORMALIZE);
     uvedi_teksture();
+    
     
     //glEnable(GL_LINE_SMOOTH);
 }

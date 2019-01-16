@@ -1,6 +1,7 @@
 #include "../header/koor_sistem.h"
 
 
+/*Iscrtavanje koordinatnog sistema*/
 void coord_sys(void)
 {
      glBegin(GL_LINES);
