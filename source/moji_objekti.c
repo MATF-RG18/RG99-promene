@@ -16,12 +16,12 @@ float radijus = 1;
 float prozirnost = 1;
 int indikator_prozirnost = 0; 
 
-void init_teksture(){
-    tekstura_sfere2 = SOIL_load_OGL_texture(TEKSTURA_SFERE2,
-    SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
-    GLUquadricObj* sfera_obj2 = gluNewQuadric();
-    gluQuadricTexture(sfera_obj2, GLU_TRUE);
-}
+// void init_teksture(){
+//     tekstura_sfere2 = SOIL_load_OGL_texture(TEKSTURA_SFERE2,
+//     SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
+//     GLUquadricObj* sfera_obj2 = gluNewQuadric();
+//     gluQuadricTexture(sfera_obj2, GLU_TRUE);
+// }
 
 void my_obj()
 {   
