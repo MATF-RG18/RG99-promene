@@ -35,10 +35,10 @@ sudo apt-get install libsoil-dev
  
 # Promena pozicije kamere:
  
- `A` - kamera se pomera u levo (look left)
- `D` - kamera se pomera u desno (look right)
- `Q` - kamera se približava koordinatom početku (zoom in)
- `E` - kamera se odaljava od koordinatnog početka (zoom out)
+ `A` - kamera se pomera u levo (look left) <br />
+ `D` - kamera se pomera u desno (look right) <br />
+ `Q` - kamera se približava koordinatom početku (zoom in) <br />
+ `E` - kamera se odaljava od koordinatnog početka (zoom out) <br />
  
  `R` - resetovanje programa
  `T` - pauzira se program
