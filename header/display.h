@@ -16,6 +16,8 @@ extern float prva_prava;
 extern int ind;
 extern int indikator_prozirnost;
 extern float radijus;
+extern GLUquadricObj* sfera_obj2;
+extern GLuint tekstura_sfere2;
 
 double uvecaj_theta;
 int indikator_kvadrat;

@@ -79,19 +79,21 @@ void on_keyboard(unsigned char key, int x, int y)
     case 'M':
     case 'm':
         /* Radijus sfere na kraju animacije se povecava */
-        radijus += 0.05;
-        glutPostRedisplay();
+        if (brojac>=3200){
+            radijus += 0.05;
+            glutPostRedisplay();
+        }
         break;
     case 'N':
     case 'n':
         /* Radijus sfere na kraju animacije se smanjuje */
-        if (radijus>=0)
-            radijus -= 0.05;
-        glutPostRedisplay();
+        if (brojac>=3200){
+            if (radijus>=0)
+                radijus -= 0.05;
+            glutPostRedisplay();
+        }
         break;
-        
     }
-        
 }
 
 void on_display(void)
@@ -176,7 +178,7 @@ void init_main(int* argc, char** argv)
     /* Ukljucujemo normalizaciju vektora normala */
     glEnable(GL_NORMALIZE);
     uvedi_teksture();
-    
+    init_teksture();
     
     //glEnable(GL_LINE_SMOOTH);
 }

@@ -43,3 +43,4 @@ void draw_lines();
 void draw_square();
 void piramida(float);
 void kocke(float);
+void init_teksture();
