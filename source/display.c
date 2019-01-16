@@ -101,7 +101,7 @@ void on_display(void)
     /*inicijalizacija Glut, GL, osvetljenje*/
     init();
     init_lights();
-    draw_name();
+    //draw_name();
     my_obj();
     //coord_sys();   
    
