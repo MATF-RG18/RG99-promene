@@ -196,12 +196,12 @@ void my_obj()
     
     /* Iscrtavanje pozadine
      Teksturirana je sfera i cela scena se nalazi unutar jedne sfere. */
-   /* glPushMatrix();
+    glPushMatrix();
     
     glDisable(GL_COLOR_MATERIAL);
     tekstura_sfere2 = SOIL_load_OGL_texture(TEKSTURA_SFERE2,
     SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
-    init_teksture();
+    //init_teksture();
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, tekstura_sfere2);
         
@@ -213,7 +213,7 @@ void my_obj()
     glDisable(GL_TEXTURE_2D);
     glEnable(GL_COLOR_MATERIAL);
     
-    glPopMatrix(); */              
+    glPopMatrix();               
 }
 
 void kocke(float transliraj){
