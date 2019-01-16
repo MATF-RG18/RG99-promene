@@ -101,7 +101,7 @@ void on_display(void)
     /*inicijalizacija Glut, GL, osvetljenje*/
     init();
     init_lights();
-    //draw_name();
+    draw_name();
     my_obj();
     //coord_sys();   
    
@@ -254,33 +254,33 @@ void uvedi_teksture(){
 }
 
 /*Ideja preuzeta od koleginice Andjelke Milovanovic*/
-// void draw_name(){
-//     int current_width = glutGet(GLUT_WINDOW_WIDTH);  
-//     int current_height = glutGet(GLUT_WINDOW_HEIGHT); 
-//  
-//     glMatrixMode(GL_PROJECTION); 
-//     glPushMatrix();  
-//         glLoadIdentity();
-//         glMatrixMode(GL_MODELVIEW); 
-//         glPushMatrix(); 
-//             glLoadIdentity();
-//             glDisable(GL_LIGHTING);
-//             glDisable(GL_LIGHT0);
-//             glColor3f(1,1,1);
-//             gluOrtho2D(0.0, current_width, current_height, 0.0);                 
-//             char display_string[32];
-//             int words = sprintf(display_string,"%s", "Kristina Pantelic");
-//             if(words < 0)
-//                 exit(1);    
-//             glRasterPos2i(current_width - 190.0f, current_height - 15.0f); 
-//             int d = (int) strlen(display_string);
-//             for (int i = 0; i < d; i++)
-//                 glutBitmapCharacter(GLUT_BITMAP_9_BY_15, display_string[i]);
-//                 
-//             glEnable(GL_LIGHTING);
-//             glEnable(GL_LIGHT0);
-//             glMatrixMode(GL_PROJECTION); 
-//         glPopMatrix(); 
-//         glMatrixMode(GL_MODELVIEW); 
-//     glPopMatrix(); 
-// }
+void draw_name(){
+    int current_width = glutGet(GLUT_WINDOW_WIDTH);  
+    int current_height = glutGet(GLUT_WINDOW_HEIGHT); 
+ 
+    glMatrixMode(GL_PROJECTION); 
+    glPushMatrix();  
+        glLoadIdentity();
+        glMatrixMode(GL_MODELVIEW); 
+        glPushMatrix(); 
+            glLoadIdentity();
+            glDisable(GL_LIGHTING);
+            glDisable(GL_LIGHT0);
+            glColor3f(1,1,1);
+            gluOrtho2D(0.0, current_width, current_height, 0.0);                 
+            char display_string[32];
+            int words = sprintf(display_string,"%s", "Kristina Pantelic");
+            if(words < 0)
+                exit(1);    
+            glRasterPos2i(current_width - 190.0f, current_height - 15.0f); 
+            int d = (int) strlen(display_string);
+            for (int i = 0; i < d; i++)
+                glutBitmapCharacter(GLUT_BITMAP_9_BY_15, display_string[i]);
+                
+            glEnable(GL_LIGHTING);
+            glEnable(GL_LIGHT0);
+            glMatrixMode(GL_PROJECTION); 
+        glPopMatrix(); 
+        glMatrixMode(GL_MODELVIEW); 
+    glPopMatrix(); 
+}
