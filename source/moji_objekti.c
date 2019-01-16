@@ -213,7 +213,7 @@ void my_obj()
     glDisable(GL_TEXTURE_2D);
     glEnable(GL_COLOR_MATERIAL);
     
-    glPopMatrix();               
+    glPopMatrix();       
 }
 
 void kocke(float transliraj){
