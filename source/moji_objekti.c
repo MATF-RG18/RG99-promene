@@ -126,7 +126,7 @@ void my_obj()
     glPopMatrix();*/
     
     /* Vodena povrsina ispod kocki */
-    
+    /*
     glPushMatrix();
     glBindTexture(GL_TEXTURE_2D, names[0]);
     //glTranslatef()
@@ -146,7 +146,7 @@ void my_obj()
     glEnd();
     glBindTexture(GL_TEXTURE_2D, 0);    
     glPopMatrix(); 
-    
+    */
     /* Nebo koje okruzuje morsku povrsinu */
     /*
     glPushMatrix();
@@ -189,31 +189,31 @@ void my_obj()
     glPopMatrix();*/
     
     /*Iscrtavanje kocki*/
-//     glEnable(GL_TEXTURE_2D);
-//     kocke(-10.5);
-//     piramida(-10.5); 
-//     glDisable(GL_TEXTURE_2D);
+    glEnable(GL_TEXTURE_2D);
+    kocke(-10.5);
+    piramida(-10.5); 
+    glDisable(GL_TEXTURE_2D);
     
     /* Iscrtavanje pozadine
      Teksturirana je sfera i cela scena se nalazi unutar jedne sfere. */
-    glPushMatrix();
+   /* glPushMatrix();
     
     glDisable(GL_COLOR_MATERIAL);
-//     tekstura_sfere2 = SOIL_load_OGL_texture(TEKSTURA_SFERE2,
-//     SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
-    //init_teksture();
+    tekstura_sfere2 = SOIL_load_OGL_texture(TEKSTURA_SFERE2,
+    SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
+    init_teksture();
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, tekstura_sfere2);
         
-//     GLUquadricObj* sfera_obj2 = gluNewQuadric();
-//     gluQuadricTexture(sfera_obj2, GLU_TRUE);
+    GLUquadricObj* sfera_obj2 = gluNewQuadric();
+    gluQuadricTexture(sfera_obj2, GLU_TRUE);
     glTranslatef(0,0,0);
     gluSphere(sfera_obj2, 20, 10, 10);
     glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_TEXTURE_2D);
     glEnable(GL_COLOR_MATERIAL);
     
-    glPopMatrix();               
+    glPopMatrix(); */              
 }
 
 void kocke(float transliraj){

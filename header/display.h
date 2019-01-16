@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <GL/glut.h>
 #include <math.h>
+#include <string.h>
 #include "kamera.h"
 #include "osvetljenje.h"
 #include "moji_objekti.h"
@@ -32,4 +33,5 @@ void on_display(void);
 void on_timer(int);
 void init_main(int*, char**);
 void uvedi_teksture();
+void draw_name();
 
